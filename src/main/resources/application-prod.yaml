@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finance_db
+    username: postgres
+    password: test
+    driver-class-name: org.postgresql.Driver
+server:
+  port: 8080
+  servlet:
+    context-path: /
