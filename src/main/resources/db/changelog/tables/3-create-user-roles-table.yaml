@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: user_role
+      author: I.Kalendarev
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_id_pk
+                    foreignKeyName: user_fk
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: role_id_pk
+                    foreignKeyName: role_fk
+                    references: roles(id)
+                    nullable: false
+
