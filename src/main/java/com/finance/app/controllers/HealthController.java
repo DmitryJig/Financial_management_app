@@ -1,4 +1,4 @@
-package com.finance.app.controller;
+package com.finance.app.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
