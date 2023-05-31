@@ -11,4 +11,8 @@ public class HealthController {
     public String getHello() {
         return "This is a financial management app";
     }
+    @GetMapping("/secured")
+    public String getSecuredData() {
+        return "This is very sensitive information, only for authorized users";
+    }
 }
