@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Table(name = "profiles")
 public class Profile {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,7 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
     // todo  при создании сущности transaction надо будет добавить коллекцию транзакций
     // todo при создании сущности categories надо будет добавить коллекцию категорий
 }
