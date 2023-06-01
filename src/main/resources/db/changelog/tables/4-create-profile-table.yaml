@@ -1,0 +1,35 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: profile
+      author: D.Jigalov
+      changes:
+        - createTable:
+            tableName: profiles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: profile_pk
+                    nullable: false
+              - column:
+                  name: profile_name
+                  type: varchar(70)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: user_fk
+                    references: users(id)
+                    nullable: false
