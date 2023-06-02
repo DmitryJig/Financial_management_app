@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeHttpRequests()
                 .regexMatchers(HttpMethod.POST, "/login").permitAll()
-                .regexMatchers("/api/v1").permitAll()
+                .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
