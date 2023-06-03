@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: caterory
+      author: S.Voronkov
+      changes:
+        - createTable:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: category_pk
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(70)
+                  constraints:
+                    unique: true
+                    nullable: false
+
