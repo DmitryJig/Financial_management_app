@@ -41,9 +41,11 @@ class UserDetailServiceImplTest {
     void deleteTest(){
         User testUser = getTestUser();
         testUser = userRepository.save(testUser);
+        Long testId = testUser.getId();
         Assertions.assertNotNull(testUser.getId());
         userService.delete(testUser);
-        Assertions.assertEquals(userRepository.findById(testUser.getId()), Optional.empty());
+        Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> userService.findById(testId));
     }
 
     private User getTestUser(){
