@@ -2,6 +2,7 @@ package com.finance.app.service;
 
 import com.finance.app.AppApplication;
 import com.finance.app.entity.User;
+import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
 class UserDetailServiceImplTest {
@@ -33,6 +35,15 @@ class UserDetailServiceImplTest {
         user = userService.save(user);
         Assertions.assertNotNull(user.getId());
         userRepository.delete(user);
+    }
+
+    @Test
+    void deleteTest(){
+        User testUser = getTestUser();
+        testUser = userRepository.save(testUser);
+        Assertions.assertNotNull(testUser.getId());
+        userService.delete(testUser);
+        Assertions.assertEquals(userRepository.findById(testUser.getId()), Optional.empty());
     }
 
     private User getTestUser(){
