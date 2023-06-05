@@ -23,7 +23,7 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "transaction")
+    @OneToMany(mappedBy = "profile")
     private Collection<Transaction> transactions;
 
     // todo  при создании сущности transaction надо будет добавить коллекцию транзакций

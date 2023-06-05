@@ -24,7 +24,7 @@ public class Transaction {
     private String type;
     @Column(name = "created")
     private LocalDateTime created;
-    @Column(name = "profile_id")
+    @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
 }
