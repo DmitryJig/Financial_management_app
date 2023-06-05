@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: transaction
+      author: A.Gladkova
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: transaction_pk
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: numeric(15,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: profile_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: profile_fk
+                    references: profiles(id)
+                    nullable: false

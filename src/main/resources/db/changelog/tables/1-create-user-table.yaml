@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: user
+      author: I.Kalendarev
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                    nullable: false
+              - column:
+                  name: user_name
+                  type: varchar(70)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(70)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: password
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
