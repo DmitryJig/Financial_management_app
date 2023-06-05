@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,7 +25,7 @@ public class Transaction {
     private String type;
     @Column(name = "created")
     private LocalDateTime created;
-    @Column(name = "profile_id")
+    @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
 }
