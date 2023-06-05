@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -24,6 +25,8 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToMany(mappedBy = "profile")
+    private Collection<Transaction> transactions;
 
     // todo  при создании сущности transaction надо будет добавить коллекцию транзакций
     // todo при создании сущности categories надо будет добавить коллекцию категорий
