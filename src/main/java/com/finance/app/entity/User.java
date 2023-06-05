@@ -1,9 +1,6 @@
 package com.finance.app.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,6 +8,7 @@ import java.util.Collection;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
@@ -34,6 +32,4 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Collection<Profile> profiles;
-
-
 }
