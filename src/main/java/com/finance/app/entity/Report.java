@@ -24,10 +24,11 @@ public class Report {
     LocalDateTime startDate;
     @Column(name = "end_date")
     LocalDateTime endDate;
-    @Column(name = "income_by_category")
-    Map<Category, BigDecimal> incomeByCategory;
-    @Column(name = "expense_by_category")
-    Map<Category, BigDecimal> expenseByCategory;
+
+//    Map<Category, BigDecimal> incomeByCategory;
+
+//    Map<Category, BigDecimal> expenseByCategory;
+
     @Column(name = "total_expenses")
     BigDecimal totalExpenses;
     @Column(name = "total_income")

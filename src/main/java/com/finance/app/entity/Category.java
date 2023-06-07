@@ -17,9 +17,6 @@ public class Category {
     private Long id;
     @Column(name = "title")
     private String title;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "transactions",
-            joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @OneToMany(mappedBy = "category")
     private Collection<Transaction> transactions;
 }
