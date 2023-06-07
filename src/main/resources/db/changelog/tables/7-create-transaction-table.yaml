@@ -41,3 +41,10 @@ databaseChangeLog:
                     foreignKeyName: profile_fk
                     references: profiles(id)
                     nullable: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: category_fk
+                    references: categories(id)
+                    nullable: false
