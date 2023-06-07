@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
+    private final UserDetailServiceImpl userDetailService;
 
     public List<Profile> findAll(){
         return profileRepository.findAll();
@@ -23,6 +23,7 @@ public class ProfileService {
     }
 
     public Profile save(Profile profile){
+        userDetailService.save(profile.getUser());
         return profileRepository.save(profile);
     }
 
