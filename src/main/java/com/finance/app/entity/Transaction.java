@@ -28,4 +28,7 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: report
+      author: S.Voronkov
+      changes:
+        - createTable:
+            tableName: reports
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: report_pk
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_expenses
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_income
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: profile_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: profile_fk
+                    references: profiles(id)
+                    nullable: false
