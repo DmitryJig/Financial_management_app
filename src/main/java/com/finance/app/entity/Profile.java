@@ -1,14 +1,15 @@
 package com.finance.app.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "profiles")
 public class Profile {
     @Id
@@ -22,7 +23,10 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToMany(mappedBy = "profile")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Collection<Transaction> transactions;
 
-    // todo  при создании сущности transaction надо будет добавить коллекцию транзакций
     // todo при создании сущности categories надо будет добавить коллекцию категорий
 }
