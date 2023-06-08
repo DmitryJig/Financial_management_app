@@ -1,7 +1,7 @@
-package com.finance.app.dto;
+package com.finance.app.model.dto;
 
-import com.finance.app.entity.Transaction;
-import com.finance.app.entity.User;
+import com.finance.app.model.entity.Transaction;
+import com.finance.app.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

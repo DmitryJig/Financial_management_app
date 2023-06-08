@@ -1,6 +1,6 @@
 package com.finance.app.service;
 
-import com.finance.app.entity.Profile;
+import com.finance.app.model.entity.Profile;
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;

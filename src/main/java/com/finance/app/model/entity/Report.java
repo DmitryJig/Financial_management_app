@@ -1,4 +1,4 @@
-package com.finance.app.entity;
+package com.finance.app.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,9 +25,13 @@ public class Report {
     @Column(name = "end_date")
     LocalDateTime endDate;
 
-//    Map<Category, BigDecimal> incomeByCategory;
+    @ElementCollection
+    @CollectionTable(name = "report_income_by_category")
+    List<ReportEntity> incomeByCategory;
 
-//    Map<Category, BigDecimal> expenseByCategory;
+    @ElementCollection
+    @CollectionTable(name = "report_expense_by_category")
+    List<ReportEntity> expenseByCategory;
 
     @Column(name = "total_expenses")
     BigDecimal totalExpenses;

@@ -1,4 +1,4 @@
-package com.finance.app.entity;
+package com.finance.app.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

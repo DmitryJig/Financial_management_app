@@ -1,6 +1,6 @@
 package com.finance.app.controllers;
 
-import com.finance.app.dto.AccountCredentials;
+import com.finance.app.model.dto.AccountCredentials;
 import com.finance.app.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

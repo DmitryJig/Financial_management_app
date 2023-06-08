@@ -1,7 +1,7 @@
 package com.finance.app.converters;
 
-import com.finance.app.dto.ProfileDTO;
-import com.finance.app.entity.Profile;
+import com.finance.app.model.dto.ProfileDTO;
+import com.finance.app.model.entity.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
