@@ -1,8 +1,8 @@
 package com.finance.app.converters;
 
 import com.finance.app.AppApplication;
-import com.finance.app.dto.UserDto;
-import com.finance.app.entity.User;
+import com.finance.app.model.dto.UserDto;
+import com.finance.app.model.entity.User;
 import com.finance.app.service.UserDetailServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

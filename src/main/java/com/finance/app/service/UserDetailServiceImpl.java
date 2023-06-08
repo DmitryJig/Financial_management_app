@@ -1,7 +1,7 @@
 package com.finance.app.service;
 
-import com.finance.app.entity.Role;
-import com.finance.app.entity.User;
+import com.finance.app.model.entity.Role;
+import com.finance.app.model.entity.User;
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
