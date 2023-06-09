@@ -1,20 +1,13 @@
 package com.finance.app.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Value;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Value
 public class RegistrationUserDto {
-    private String username;
-    private String password;
-    private String confirmPassword;
-    private String email;
+    String username;
+    String password;
+    String confirmPassword;
+    String email;
 }

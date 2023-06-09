@@ -30,9 +30,8 @@ public class CategoryServiceTest {
     @Test
     public void testGetCategoryById() {
         Category category = createTestCategory();
-        Optional<Category> result = categoryService.getCategoryById(category.getId());
-        Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals("Category Test", result.get().getTitle());
+        Category result = categoryService.getCategoryById(category.getId());
+        Assertions.assertEquals(result.getTitle(), category.getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
     }
     @Test

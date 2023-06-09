@@ -1,16 +1,30 @@
 package com.finance.app.converters;
 
-import com.finance.app.model.dto.ProfileDTO;
+import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.model.entity.Profile;
+import com.finance.app.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProfileConverter {
-    public static Profile dtoToEntity(ProfileDTO dto) {
-        return new Profile(dto.getId(), dto.getProfileName(), dto.getBalance(), dto.getUser(), dto.getTransactions());
+    private final UserService userService;
+
+    public Profile dtoToEntity(ProfileDto dto) {
+        var profile = new Profile();
+        profile.setId(dto.getId());
+        profile.setProfileName(dto.getProfileName());
+        profile.setBalance(dto.getBalance());
+        profile.setUser(userService.findById(dto.getId()));
+        return profile;
     }
 
-    public static ProfileDTO entityToDTO(Profile entity) {
-        return new ProfileDTO(entity.getId(), entity.getProfileName(), entity.getBalance(), entity.getUser(), entity.getTransactions());
+    public ProfileDto entityToDto(Profile entity) {
+        return new ProfileDto(
+                entity.getId(),
+                entity.getProfileName(),
+                entity.getBalance(),
+                entity.getUser().getId());
     }
 }
