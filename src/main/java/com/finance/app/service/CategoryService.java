@@ -29,13 +29,13 @@ public class CategoryService {
         return categoryRepository.findByTitle(title);
     }
 
-    public Category createCategory(Category category) {
+    public Category createOrUpdateCategory(Category category) {
         return categoryRepository.save(category);
     }
 
-    public Category updateCategory(Category category) {
-        return categoryRepository.save(category);
-    }
+//    public Category updateCategory(Category category) {
+//        return categoryRepository.save(category);
+//    }
 
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);

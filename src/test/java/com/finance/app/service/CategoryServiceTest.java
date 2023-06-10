@@ -2,7 +2,6 @@ package com.finance.app.service;
 
 import com.finance.app.model.entity.Category;
 import com.finance.app.repository.CategoryRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class CategoryServiceTest {
     public void testCreateCategory() {
         Category category = new Category();
         category.setTitle("Category Test");
-        Category result = categoryService.createCategory(category);
+        Category result = categoryService.createOrUpdateCategory(category);
         Assertions.assertNotNull(result.getId());
         Assertions.assertEquals("Category Test", result.getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
@@ -57,7 +56,7 @@ public class CategoryServiceTest {
     public void testUpdateCategory() {
         Category category = createTestCategory();
         category.setTitle("Updated Category");
-        Category result = categoryService.updateCategory(category);
+        Category result = categoryService.createOrUpdateCategory(category);
         Assertions.assertEquals("Updated Category", result.getTitle());
         categoryService.deleteCategoryByTitle("Updated Category");
     }
