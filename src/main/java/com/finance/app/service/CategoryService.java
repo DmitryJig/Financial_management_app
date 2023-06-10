@@ -33,10 +33,6 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-//    public Category updateCategory(Category category) {
-//        return categoryRepository.save(category);
-//    }
-
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
     }
