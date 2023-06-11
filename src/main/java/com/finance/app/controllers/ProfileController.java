@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/profile")
 public class ProfileController {
     @Autowired
-    ProfileService profileService;
+    private ProfileService profileService;
 
     @GetMapping("/{id}")
     public ProfileDTO getProfile(@PathVariable Long id){
@@ -21,14 +21,15 @@ public class ProfileController {
         return ProfileConverter.entityToDTO(profile);
     }
 
-    @PostMapping()
-    public ProfileDTO saveOrUpdate(@RequestBody Profile profile) {
+    @PostMapping
+    public ProfileDTO saveOrUpdate(@RequestBody ProfileDTO profileDTO) {
+        Profile profile = ProfileConverter.dtoToEntity(profileDTO);
         profileService.save(profile);
         return ProfileConverter.entityToDTO(profile);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProfile(@PathVariable Profile profile) {
-        profileService.delete(profile);
+    public void deleteProfile(@PathVariable Long id) {
+        profileService.delete(profileService.findById(id));
     }
 }
