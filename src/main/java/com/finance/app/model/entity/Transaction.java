@@ -1,4 +1,4 @@
-package com.finance.app.entity;
+package com.finance.app.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -28,4 +27,7 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

@@ -1,8 +1,6 @@
-package com.finance.app.entity;
+package com.finance.app.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,8 +24,7 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "profile")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Collection<Transaction> transactions;
-
-    // todo  при создании сущности transaction надо будет добавить коллекцию транзакций
-    // todo при создании сущности categories надо будет добавить коллекцию категорий
 }

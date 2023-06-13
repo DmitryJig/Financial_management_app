@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: report_expense_by_category
+      author: I.Kalendarev
+      changes:
+        - createTable:
+            tableName: report_expense_by_category
+            columns:
+              - column:
+                  name: report_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: report_id_pk
+                    foreignKeyName: report_expense_fk
+                    references: reports(id)
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: category_id_pk
+                    foreignKeyName: category_expense_fk
+                    references: categories(id)
+                    nullable: false
+              - column:
+                  name: transaction_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: transaction_id_pk
+                    foreignKeyName: transaction_expense_fk
+                    references: transactions(id)
+                    nullable: false
+              - column:
+                  name: amount
+                  type: numeric(15,2)
+                  constraints:
+                    nullable: false

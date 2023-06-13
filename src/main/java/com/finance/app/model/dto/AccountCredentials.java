@@ -1,4 +1,4 @@
-package com.finance.app.dto;
+package com.finance.app.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

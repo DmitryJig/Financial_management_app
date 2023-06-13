@@ -2,9 +2,9 @@ package com.finance.app.converters;
 
 
 import com.finance.app.AppApplication;
-import com.finance.app.dto.ProfileDTO;
-import com.finance.app.entity.Profile;
-import com.finance.app.entity.User;
+import com.finance.app.model.dto.ProfileDTO;
+import com.finance.app.model.entity.Profile;
+import com.finance.app.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
