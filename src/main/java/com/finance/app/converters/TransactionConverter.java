@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransactionConverter {
 
-    public static TransactionDto entityToDto(Transaction entity){
+    public TransactionDto entityToDto(Transaction entity){
         return new TransactionDto(entity.getId(), entity.getDescription(), entity.getAmount(), entity.getType(), entity.getCreated(), entity.getProfile(), entity.getCategory());
     }
 
-    public static Transaction dtoToEntity(TransactionDto dto){
+    public Transaction dtoToEntity(TransactionDto dto){
         return new Transaction(dto.getId(), dto.getDescription(), dto.getAmount(), dto.getType(), dto.getCreated(), dto.getProfile(), dto.getCategory());
     }
 

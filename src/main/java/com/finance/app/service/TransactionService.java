@@ -22,4 +22,9 @@ public class TransactionService {
     public Transaction findById(Long id){
         return transactionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Transaction with id = %d not found", id)));
     }
+    public void deleteById (Long id) {transactionRepository.deleteById(id);}
+
+    public List<Transaction> findTransactionByProfile(String profileName) {
+        return transactionRepository.findAllByProfile(profileName);
+    }
 }
