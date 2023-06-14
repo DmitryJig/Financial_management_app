@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
+    private final RoleService roleService;
+
+    public boolean existsByUsername(String username){
+        return userRepository.existsByUsername(username);
+    }
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(String.format("User username: %s not found", username)));
@@ -36,19 +42,28 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
     }
 
-    public User findById(Long id){
+    public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("User with id = %d not found", id)));
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User save(User user){
+    public User save(User user) {
         return userRepository.save(user);
     }
 
-    public void delete(User user){
+    public void createUser(User user){
+        user.setRoles(List.of(roleService.getEntityRole()));
+        userRepository.save(user);
+    }
+
+    public void delete(User user) {
         userRepository.delete(user);
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }

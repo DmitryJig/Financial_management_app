@@ -27,6 +27,4 @@ public class Profile {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Collection<Transaction> transactions;
-
-    // todo при создании сущности categories надо будет добавить коллекцию категорий
 }
