@@ -1,7 +1,7 @@
 package com.finance.app.service;
 
-import com.finance.app.model.entity.Profile;
 import com.finance.app.exception.ResourceNotFoundException;
+import com.finance.app.model.entity.Profile;
 import com.finance.app.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
-    private final UserDetailServiceImpl userDetailService;
+    private final UserService userService;
 
     public List<Profile> findAll(){
         return profileRepository.findAll();
@@ -23,7 +23,7 @@ public class ProfileService {
     }
 
     public Profile save(Profile profile){
-        userDetailService.save(profile.getUser());
+        userService.save(profile.getUser());
         return profileRepository.save(profile);
     }
 

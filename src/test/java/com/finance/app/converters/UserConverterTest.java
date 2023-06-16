@@ -3,7 +3,7 @@ package com.finance.app.converters;
 import com.finance.app.AppApplication;
 import com.finance.app.model.dto.UserDto;
 import com.finance.app.model.entity.User;
-import com.finance.app.service.UserDetailServiceImpl;
+import com.finance.app.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ class UserConverterTest {
     @Autowired
     UserConverter userConverter;
     @Autowired
-    UserDetailServiceImpl userDetailService;
+    UserService userService;
 
     @Test
     void entityToDtoTest() {
         User testUser = getTestUser();
-        userDetailService.save(testUser);
+        userService.save(testUser);
         UserDto testUserDto = userConverter.entityToDto(testUser);
         Assertions.assertEquals(testUser.getId(), testUserDto.getId());
         Assertions.assertEquals(testUser.getUsername(), testUserDto.getUsername());
         Assertions.assertEquals(testUser.getEmail(), testUserDto.getEmail());
-        userDetailService.delete(testUser);
+        userService.delete(testUser);
     }
 
     private User getTestUser() {
