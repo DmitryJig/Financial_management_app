@@ -8,15 +8,10 @@ import org.springframework.stereotype.Component;
 public class CategoryConverter {
 
     public static CategoryDto entityToDTO(Category entity) {
-        return new CategoryDto(
-                entity.getId(),
-                entity.getTitle());
+        return new CategoryDto(entity.getId(),entity.getTitle(),entity.getTransactions());
     }
 
     public static Category dtoToEntity(CategoryDto dto) {
-        var cat = new Category();
-        cat.setId(dto.getId());
-        cat.setTitle(dto.getTitle());
-        return cat;
+        return new Category(dto.getId(),dto.getTitle(),dto.getTransactions());
     }
 }
