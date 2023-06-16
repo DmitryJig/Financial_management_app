@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/v1/profile")
+@RequestMapping("api/v1/profiles")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
     @GetMapping("/{id}")
     public ProfileDTO getProfile(@PathVariable Long id){
-        Profile profile = profileService.findById(id);
-        return ProfileConverter.entityToDTO(profile);
+        return ProfileConverter.entityToDTO(profileService.findById(id));
     }
 
     @PostMapping
