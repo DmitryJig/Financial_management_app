@@ -1,15 +1,14 @@
 package com.finance.app.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categories")
@@ -21,19 +20,5 @@ public class Category {
     @Column(name = "title")
     private String title;
     @OneToMany(mappedBy = "category")
-    @JsonIgnore
     private Collection<Transaction> transactions;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return id != null && id.equals(category.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
