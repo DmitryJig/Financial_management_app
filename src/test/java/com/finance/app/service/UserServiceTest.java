@@ -15,9 +15,9 @@ import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
 @ActiveProfiles("prod")
-class UserDetailServiceImplTest {
+class UserServiceTest {
     @Autowired
-    UserDetailServiceImpl userService;
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
