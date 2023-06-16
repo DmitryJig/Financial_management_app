@@ -27,7 +27,7 @@ public class TransactionController {
         transactionService.deleteById(id);
     }
 
-    @GetMapping
+    @GetMappiing("/all")
     public List<TransactionDto> findAll(){
         return transactionService.findAll().stream()
                 .map(transactionConverter::entityToDto).collect(Collectors.toList());
