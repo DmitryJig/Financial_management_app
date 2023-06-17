@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProfileConverter {
-    public static Profile dtoToEntity(ProfileDTO dto) {
+    public Profile dtoToEntity(ProfileDTO dto) {
         return new Profile(dto.getId(), dto.getProfileName(), dto.getBalance(), dto.getUser(), dto.getTransactions());
     }
 
-    public static ProfileDTO entityToDTO(Profile entity) {
+    public ProfileDTO entityToDTO(Profile entity) {
         return new ProfileDTO(entity.getId(), entity.getProfileName(), entity.getBalance(), entity.getUser(), entity.getTransactions());
     }
 }

@@ -14,17 +14,18 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
+    private ProfileConverter profileConverter;
 
     @GetMapping("/{id}")
     public ProfileDTO getProfile(@PathVariable Long id){
-        return ProfileConverter.entityToDTO(profileService.findById(id));
+        return profileConverter.entityToDTO(profileService.findById(id));
     }
 
     @PostMapping
     public ProfileDTO saveOrUpdate(@RequestBody ProfileDTO profileDTO) {
-        Profile profile = ProfileConverter.dtoToEntity(profileDTO);
+        Profile profile = profileConverter.dtoToEntity(profileDTO);
         profileService.save(profile);
-        return ProfileConverter.entityToDTO(profile);
+        return profileConverter.entityToDTO(profile);
     }
 
     @DeleteMapping("/{id}")
