@@ -1,5 +1,6 @@
 package com.finance.app.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Profile {
     @Column(name = "balance")
     private BigDecimal balance;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "profile")
