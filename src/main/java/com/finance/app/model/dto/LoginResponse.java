@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class LoginResponse {
-    Long userid;
+    Long userId;
     String accessToken;
 }
