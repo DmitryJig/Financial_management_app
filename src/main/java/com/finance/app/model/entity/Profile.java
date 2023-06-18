@@ -5,11 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "profiles")
 public class Profile {
     @Id
@@ -19,12 +20,23 @@ public class Profile {
     @Column(name = "profile_name")
     private String profileName;
     @Column(name = "balance")
-    private BigDecimal balance;
+    private BigDecimal balance;    //TODO вынести balance в отдельный класс Entity и реализовать к ней слои доступа к данным и контроллеры
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "profile")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Collection<Transaction> transactions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profile profile = (Profile) o;
+        return id != null && id.equals(profile.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
