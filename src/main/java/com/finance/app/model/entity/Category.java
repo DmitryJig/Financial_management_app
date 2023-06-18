@@ -1,5 +1,6 @@
 package com.finance.app.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Category {
     @Column(name = "title")
     private String title;
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Collection<Transaction> transactions;
 
     @Override
