@@ -1,30 +1,40 @@
 package com.finance.app.service;
 
-import com.finance.app.exception.ResourceNotFoundException;
+import com.finance.app.converters.TransactionConverter;
+import com.finance.app.model.dto.TransactionDto;
 import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
+    private final TransactionConverter transactionConverter;
 
-    public List<Transaction> findAll() {return transactionRepository.findAll();}
+    public TransactionDto save(Transaction transaction) {
 
-    public void delete(Transaction transaction) {transactionRepository.delete(transaction);}
+        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
 
-    public void save(Transaction transaction) {transactionRepository.save(transaction);}
-
-    public Transaction findById(Long id){
-        return transactionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Transaction with id = %d not found", id)));
+        return transactionConverter.toDto(transactionRepository.save(transaction));
     }
-    public void deleteById (Long id) {transactionRepository.deleteById(id);}
 
-    public List<Transaction> findTransactionByProfile(String profileName) {
-        return transactionRepository.findAllByProfile(profileName);
+    public List<Transaction> getAllByProfileId(Long profileId) {
+        return transactionRepository.findAllByProfileId(profileId);
+    }
+
+    public void deleteByIdAndProfileId(Long id, Long profileId) {
+
+        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
+
+        transactionRepository.deleteByIdAndProfileId(id, profileId);
+    }
+
+    public List<Transaction> getTransactionByProfileAndDateRange(Long profileId, LocalDate starDate, LocalDate endDate) {
+        return transactionRepository.findByProfileIdAndCreatedBetween(profileId, starDate, endDate);
     }
 }

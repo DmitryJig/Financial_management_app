@@ -11,31 +11,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/transactions")
+@RequestMapping("/api/v1/transactions/{profileId}")
 public class TransactionController {
 
-    private TransactionService transactionService;
-    private TransactionConverter transactionConverter;
-
-    @GetMapping("/{id}")
-    public TransactionDto getTransactionById(@PathVariable Long id) {
-        return transactionConverter.entityToDto(transactionService.findById(id));
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteTransactionById(@PathVariable Long id){
-        transactionService.deleteById(id);
-    }
-
-    @GetMapping("/all")
-    public List<TransactionDto> findAll(){
-        return transactionService.findAll().stream()
-                .map(transactionConverter::entityToDto).collect(Collectors.toList());
-    }
+    private final TransactionService transactionService;
+    private final TransactionConverter transactionConverter;
 
     @GetMapping
-    public List<TransactionDto> getCurrentProfileTransactions(@RequestHeader String profileName) {
-        return transactionService.findTransactionByProfile(profileName).stream()
-                .map(transactionConverter::entityToDto).collect(Collectors.toList());
+    public List<TransactionDto> getAllTransaction(@PathVariable Long profileId) {
+        return transactionService.getAllByProfileId(profileId).stream().map(transactionConverter::toDto).collect(Collectors.toList());
     }
+
+    @DeleteMapping("/{transactionId}")
+    public void deleteTransactionById(@PathVariable Long profileId, @PathVariable Long transactionId) {
+        transactionService.deleteByIdAndProfileId(transactionId, profileId);
+    }
+
+    @PostMapping
+    public TransactionDto addTransaction(@RequestBody TransactionDto dto) {
+        return transactionService.save(transactionConverter.toEntity(dto));
+    }
+
 }

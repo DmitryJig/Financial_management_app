@@ -1,17 +1,17 @@
 package com.finance.app.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.finance.app.model.enums.TypeOfTransaction;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
     @Id
@@ -23,9 +23,10 @@ public class Transaction {
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "type")
-    private String type;
+    @Enumerated(value = EnumType.STRING)
+    private TypeOfTransaction type;
     @Column(name = "created")
-    private LocalDateTime created;
+    private LocalDate created;
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
@@ -33,5 +34,16 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return id != null && id.equals(that.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

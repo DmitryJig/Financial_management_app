@@ -1,5 +1,6 @@
 package com.finance.app.service;
 
+import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.entity.Category;
 import com.finance.app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Optional<Category> getCategoryById(Long id) {
-        return categoryRepository.findById(id);
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Category with id = %d not found", id)));
     }
 
     public Optional<Category> getCategoryByTitle(String title) {
