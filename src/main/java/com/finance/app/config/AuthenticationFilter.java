@@ -1,6 +1,6 @@
 package com.finance.app.config;
 
-import com.finance.app.service.JwtService;
+import com.finance.app.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
