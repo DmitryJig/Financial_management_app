@@ -1,5 +1,6 @@
 package com.finance.app.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,7 @@ public class Transaction {
     private LocalDateTime created;
     @ManyToOne
     @JoinColumn(name = "profile_id")
+    @JsonIgnore
     private Profile profile;
     @ManyToOne
     @JoinColumn(name = "category_id")
