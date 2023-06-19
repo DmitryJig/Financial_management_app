@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +28,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @ToString.Exclude
-    private Collection<Role> roles;
+    private Set<Role> roles;
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Collection<Profile> profiles;
