@@ -1,6 +1,9 @@
 package com.finance.app.service;
 
+import com.finance.app.converters.UserConverter;
 import com.finance.app.exception.ResourceNotFoundException;
+import com.finance.app.model.dto.RegUserDto;
+import com.finance.app.model.dto.UserDto;
 import com.finance.app.model.entity.User;
 import com.finance.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final RoleService roleService;
+    private final UserConverter userConverter;
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(String.format("User username: %s not found", username)));
-    }
-    public boolean existsByUsername(String username){
-        return userRepository.existsByUsername(username);
     }
 
     public User findById(Long id) {
@@ -33,9 +33,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void createUser(User user){
-        user.setRoles(List.of(roleService.getEntityRole()));
-        userRepository.save(user);
+    public UserDto createUser(RegUserDto regUserDto){
+        User user = userRepository.save(userConverter.dtoToEntity(regUserDto));
+        return userConverter.entityToDto(user);
     }
 
     public void delete(User user) {
