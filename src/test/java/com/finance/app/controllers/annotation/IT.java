@@ -1,4 +1,4 @@
-package controllers.annotation;
+package com.finance.app.controllers.annotation;
 
 import com.finance.app.AppApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
