@@ -32,7 +32,10 @@ public class ProfileService {
         return profileConverter.entityToDto(profileRepository.save(profile));
     }
 
-    public void deleteByProfileIdAndUserId(Long profileId, Long userId){
-        profileRepository.deleteByIdAndUserId(profileId, userId);
+//    public void deleteByProfileIdAndUserId(Long profileId, Long userId){
+//        profileRepository.deleteByIdAndUserId(profileId, userId);
+//    }
+    public void deleteByProfileIdAndUserId(Profile profile){
+        profileRepository.delete(profile);
     }
 }

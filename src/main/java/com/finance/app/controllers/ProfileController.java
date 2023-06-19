@@ -25,11 +25,14 @@ public class ProfileController {
     @PostMapping
     public ProfileDto saveOrUpdate(@RequestBody ProfileDto profDto) {
         return profileService.save(profileConverter.dtoToEntity(profDto));
-
     }
 
+//    @DeleteMapping("/{profileId}")
+//    public void deleteProfile(@PathVariable Long userId, @PathVariable Long profileId) {
+//        profileService.deleteByProfileIdAndUserId(profileId, userId);
+//    }
     @DeleteMapping("/{profileId}")
     public void deleteProfile(@PathVariable Long userId, @PathVariable Long profileId) {
-        profileService.deleteByProfileIdAndUserId(profileId, userId);
+        profileService.deleteByProfileIdAndUserId(profileService.findById(profileId));
     }
 }
