@@ -4,13 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.app.AppApplication;
 import com.finance.app.converters.ProfileConverter;
 import com.finance.app.exception.ResourceNotFoundException;
-import com.finance.app.model.dto.ProfileDto;
-import com.finance.app.model.dto.RegistrationUserDto;
 import com.finance.app.model.entity.Profile;
 import com.finance.app.model.entity.User;
 import com.finance.app.service.ProfileService;
 import com.finance.app.service.UserService;
-import liquibase.pro.packaged.E;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +97,4 @@ public class ProfileControllerTest {
         user.setEmail("TestEmail@gmail.com");
         return user;
     }
-
 }
