@@ -1,11 +1,12 @@
 package com.finance.app.controllers;
 
+import com.finance.app.converters.JwtUserConverter;
 import com.finance.app.converters.UserConverter;
 import com.finance.app.exception.AppException;
 import com.finance.app.model.dto.RegistrationUserDto;
 import com.finance.app.model.dto.UserDto;
 import com.finance.app.model.entity.User;
-import com.finance.app.service.JwtService;
+import com.finance.app.security.jwt.JwtService;
 import com.finance.app.service.UserDetailServiceImpl;
 import com.finance.app.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class UserController {
     private final UserService userService;
     private final UserConverter userConverter;
     private final JwtService jwtService;
+    private final JwtUserConverter jwtUserConverter;
 
     @GetMapping
     public List<UserDto> findAll(){
@@ -50,7 +52,7 @@ public class UserController {
         userService.createUser(user);
 
         UserDetails userDetails = userDetailService.loadUserByUsername(registrationUserDto.getUsername());
-        String token = jwtService.getToken(userDetails);
+        String token = jwtService.getLoginResponse(jwtUserConverter.userToJwtUser(userDetails)).getAccessToken();
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")

@@ -1,5 +1,6 @@
-package com.finance.app.service;
+package com.finance.app.security.jwt;
 
+import com.finance.app.model.dto.LoginResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,15 +8,11 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +21,15 @@ public class JwtService {
     static final String PREFIX = "Bearer";
     private static Integer expirationTime = 1000 * 60 * 100;
 
+    public LoginResponse getLoginResponse(JwtUser jwtUser) {
+        return new LoginResponse(
+                jwtUser.getId(),
+                getToken(jwtUser)
+        );
+    }
 
-    public String getToken(UserDetails user) {
+
+    private String getToken(JwtUser user) {
         String username = user.getUsername();
         List<String> authorities = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
@@ -33,6 +37,8 @@ public class JwtService {
 
         return Jwts.builder()
                 .setClaims(claims)
+                .claim("id", user.getId())
+                .claim("profileId", user.getProfilesId())
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
@@ -54,11 +60,11 @@ public class JwtService {
         return null;
     }
 
-    public List<GrantedAuthority> getAuthority(String token) {
-        List<String> authority = (List<String>) getAllClaimsFromToken(token.replace(PREFIX, "")).get("authority");
-        return authority.stream()
+    public Collection<? extends GrantedAuthority> getAuthority(String token) {
+        Claims claims = getAllClaimsFromToken(token);
+        List<String> roles = claims.get("authority", List.class);
+        return roles.stream()
                 .map(SimpleGrantedAuthority::new)
-                .map(it -> (GrantedAuthority) it)
                 .collect(Collectors.toList());
     }
 

@@ -29,4 +29,5 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRoleToAuthor(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
     }
+
 }
