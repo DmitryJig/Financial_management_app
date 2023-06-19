@@ -16,7 +16,7 @@ public class ProfileConverter {
         profile.setId(dto.getId());
         profile.setProfileName(dto.getProfileName());
         profile.setBalance(dto.getBalance());
-        profile.setUser(userService.findById(dto.getId()));
+        profile.setUser(userService.findById(dto.getUserId()));
         return profile;
     }
 

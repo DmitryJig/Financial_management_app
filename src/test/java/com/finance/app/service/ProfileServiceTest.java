@@ -2,7 +2,6 @@ package com.finance.app.service;
 
 import com.finance.app.AppApplication;
 import com.finance.app.exception.ResourceNotFoundException;
-import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.model.entity.Profile;
 import com.finance.app.model.entity.User;
 import com.finance.app.repository.ProfileRepository;
@@ -10,17 +9,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-//@ActiveProfiles("prod")
+@ActiveProfiles("prod")
 public class ProfileServiceTest {
     @Autowired
     ProfileService profileService;
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    UserService userService;
 
     @Test
     void findAllTest() {
@@ -53,12 +55,13 @@ public class ProfileServiceTest {
         profileRepository.save(testProfile);
         Long testId = testProfile.getId();
         Assertions.assertNotNull(testProfile.getId());
-        profileService.deleteByProfileIdAndUserId(testProfile);
+        profileService.deleteByProfileId(testProfile);
         Assertions.assertThrows(ResourceNotFoundException.class, () -> profileService.findById(testId));
     }
 
     private Profile getTestProfile() {
         Profile profile = new Profile();
+        profile.setId(Long.valueOf(profileService.findAll().size() + 1));
         profile.setProfileName("TestName");
         profile.setUser(getTestUser());
         profile.setBalance(BigDecimal.valueOf(1230));
@@ -67,6 +70,7 @@ public class ProfileServiceTest {
 
     private User getTestUser() {
         User user = new User();
+        user.setId(Long.valueOf(userService.findAll().size() + 1));
         user.setUsername("TestName");
         user.setPassword("TestPassword");
         user.setEmail("TestEmail@gmail.com");

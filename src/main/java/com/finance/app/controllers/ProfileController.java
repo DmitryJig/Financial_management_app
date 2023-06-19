@@ -32,7 +32,7 @@ public class ProfileController {
 //        profileService.deleteByProfileIdAndUserId(profileId, userId);
 //    }
     @DeleteMapping("/{profileId}")
-    public void deleteProfile(@PathVariable Long userId, @PathVariable Long profileId) {
-        profileService.deleteByProfileIdAndUserId(profileService.findById(profileId));
+    public void deleteProfile(@PathVariable Long profileId) {
+        profileService.deleteByProfileId(profileService.findById(profileId));
     }
 }
