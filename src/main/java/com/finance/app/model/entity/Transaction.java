@@ -15,8 +15,17 @@ import java.util.Objects;
 @Table(name = "transactions")
 public class Transaction {
     @Id
+    @SequenceGenerator(
+            name = "TRANSACTIONS_SEC",
+            sequenceName = "TRANSACTIONS_SEC",
+            allocationSize = 1
+
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "TRANSACTIONS_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "description")
     private String description;
