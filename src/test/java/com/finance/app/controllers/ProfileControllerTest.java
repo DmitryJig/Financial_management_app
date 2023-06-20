@@ -2,6 +2,7 @@ package com.finance.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.app.AppApplication;
+import com.finance.app.controllers.annotation.IT;
 import com.finance.app.converters.ProfileConverter;
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.entity.Profile;
@@ -26,10 +27,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
-@AutoConfigureMockMvc
-@AutoConfigureWebTestClient
+@IT
+@WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
 public class ProfileControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -43,7 +42,6 @@ public class ProfileControllerTest {
     ProfileConverter profileConverter;
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void findById() throws Exception {
         mockMvc.perform(get("/api/v1/profile/1/1"))
                 .andDo(MockMvcResultHandlers.print())
@@ -55,7 +53,6 @@ public class ProfileControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void createProfileTest() throws Exception {
         Profile testProfile = getTestProfile();
         testProfile.setUser(userService.save(testProfile.getUser()));
@@ -72,7 +69,6 @@ public class ProfileControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void deleteById() throws Exception {
         Profile testProfile = getTestProfile();
         testProfile.setId(profileService.save(testProfile).getId());
