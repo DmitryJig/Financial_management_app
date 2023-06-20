@@ -1,7 +1,7 @@
-package controllers;
+package com.finance.app.controllers;
 
 
-import controllers.annotation.IT;
+import com.finance.app.controllers.annotation.IT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -14,4 +14,9 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(new AppException(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler
+    public ResponseEntity<AppException> exceptionHandler(IllegalArgumentException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new AppException(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

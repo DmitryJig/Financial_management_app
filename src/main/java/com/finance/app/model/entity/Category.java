@@ -1,14 +1,16 @@
 package com.finance.app.model.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "categories")
 public class Category {
     @Id
@@ -19,4 +21,17 @@ public class Category {
     private String title;
     @OneToMany(mappedBy = "category")
     private Collection<Transaction> transactions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id != null && id.equals(category.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

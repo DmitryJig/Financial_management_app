@@ -2,34 +2,34 @@ package com.finance.app.controllers;
 
 
 import com.finance.app.converters.ProfileConverter;
-import com.finance.app.model.dto.ProfileDTO;
-import com.finance.app.model.entity.Profile;
+import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.service.ProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.finance.app.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/v1/profile")
+@RequestMapping("api/v1/profile/{userId}")
+@RequiredArgsConstructor
 public class ProfileController {
-    @Autowired
-    private ProfileService profileService;
+    private final ProfileConverter profileConverter;
+    private final ProfileService profileService;
+    private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ProfileDTO getProfile(@PathVariable Long id){
-        Profile profile = profileService.findById(id);
-        return ProfileConverter.entityToDTO(profile);
+    @GetMapping("/{profileId}")
+    public ProfileDto getProfile(@PathVariable Long userId, @PathVariable Long profileId) {
+        return profileConverter.entityToDto(profileService.findByIdAndProfileId(profileId, userId));
     }
 
     @PostMapping
-    public ProfileDTO saveOrUpdate(@RequestBody ProfileDTO profileDTO) {
-        Profile profile = ProfileConverter.dtoToEntity(profileDTO);
-        profileService.save(profile);
-        return ProfileConverter.entityToDTO(profile);
+    public ProfileDto saveOrUpdate(@RequestBody ProfileDto profDto) {
+        return profileService.save(profileConverter.dtoToEntity(profDto));
+
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProfile(@PathVariable Long id) {
-        profileService.delete(profileService.findById(id));
+    @DeleteMapping("/{profileId}")
+    public void deleteProfile(@PathVariable Long userId, @PathVariable Long profileId) {
+        profileService.deleteByProfileIdAndUserId(profileId, userId);
     }
 }
