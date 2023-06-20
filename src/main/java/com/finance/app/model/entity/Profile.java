@@ -3,7 +3,6 @@ package com.finance.app.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -19,8 +18,8 @@ public class Profile {
     private Long id;
     @Column(name = "profile_name")
     private String profileName;
-    @Column(name = "balance")
-    private BigDecimal balance;    //TODO вынести balance в отдельный класс Entity и реализовать к ней слои доступа к данным и контроллеры
+    @OneToOne(mappedBy = "balance")
+    private Balance balance;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;

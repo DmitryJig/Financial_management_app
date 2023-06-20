@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: balance
+      author: A.Gladkova
+      changes:
+        - createTable:
+            tableName: balance
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: balance_pk
+                    nullable: false
+              - column:
+                  name: amount
+                  type: numeric(15,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: profile_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: profile_fk
+                    references: profiles(id)
+                    nullable: false

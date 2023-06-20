@@ -2,6 +2,7 @@ package com.finance.app.converters;
 
 import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.model.entity.Profile;
+import com.finance.app.service.BalanceService;
 import com.finance.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProfileConverter {
     private final UserService userService;
+    private final BalanceService balanceService;
 
     public Profile dtoToEntity(ProfileDto dto) {
         var profile = new Profile();
         profile.setId(dto.getId());
         profile.setProfileName(dto.getProfileName());
-        profile.setBalance(dto.getBalance());
+        profile.setBalance(balanceService.findById(dto.getId()));
         profile.setUser(userService.findById(dto.getId()));
         return profile;
     }
@@ -24,7 +26,7 @@ public class ProfileConverter {
         return new ProfileDto(
                 entity.getId(),
                 entity.getProfileName(),
-                entity.getBalance(),
+                entity.getBalance().getId(),
                 entity.getUser().getId());
     }
 }
