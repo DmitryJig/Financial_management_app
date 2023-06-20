@@ -68,7 +68,7 @@ public class ProfileControllerTest {
         testProfile.setId(profileService.findAll().stream()
                 .filter(p -> testProfile.getProfileName().equals(p.getProfileName()))
                 .findFirst().get().getId());
-        profileService.deleteByProfileId(testProfile);
+        profileService.deleteByProfileId(testProfile.getId());
     }
 
     @Test

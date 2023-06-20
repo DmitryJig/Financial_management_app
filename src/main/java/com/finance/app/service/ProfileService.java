@@ -16,26 +16,26 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileConverter profileConverter;
 
-    public List<Profile> findAll(){
+    public List<Profile> findAll() {
         return profileRepository.findAll();
     }
 
-    public Profile findByIdAndProfileId(Long profileId, Long userId){
-        return profileRepository.findByIdAndUserId(profileId, userId).orElseThrow(()-> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId)));
+    public Profile findByIdAndProfileId(Long profileId, Long userId) {
+        return profileRepository.findByIdAndUserId(profileId, userId).orElseThrow(() -> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId)));
     }
 
     public Profile findById(Long id) {
-        return profileRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Profile with id = %d not found", id)));
+        return profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Profile with id = %d not found", id)));
     }
 
-    public ProfileDto save(Profile profile){
+    public ProfileDto save(Profile profile) {
         return profileConverter.entityToDto(profileRepository.save(profile));
     }
 
-//    public void deleteByProfileIdAndUserId(Long profileId, Long userId){
-//        profileRepository.deleteByIdAndUserId(profileId, userId);
-//    }
-    public void deleteByProfileId(Profile profile){
-        profileRepository.delete(profile);
+    //    public void deleteByProfileIdAndUserId(Long profileId, Long userId){
+    //        profileRepository.deleteByIdAndUserId(profileId, userId);
+    //    }
+    public void deleteByProfileId(Long id) {
+        profileRepository.deleteById(id);
     }
 }

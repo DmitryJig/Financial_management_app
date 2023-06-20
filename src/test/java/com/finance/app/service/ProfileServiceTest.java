@@ -21,8 +21,6 @@ public class ProfileServiceTest {
     ProfileService profileService;
     @Autowired
     ProfileRepository profileRepository;
-    @Autowired
-    UserService userService;
 
     @Test
     void findAllTest() {
@@ -52,16 +50,14 @@ public class ProfileServiceTest {
     @Test
     void deleteTest() {
         Profile testProfile = getTestProfile();
-        profileRepository.save(testProfile);
-        Long testId = testProfile.getId();
+        Long testId = profileRepository.save(testProfile).getId();
         Assertions.assertNotNull(testProfile.getId());
-        profileService.deleteByProfileId(testProfile);
+        profileService.deleteByProfileId(testId);
         Assertions.assertThrows(ResourceNotFoundException.class, () -> profileService.findById(testId));
     }
 
     private Profile getTestProfile() {
         Profile profile = new Profile();
-        profile.setId(Long.valueOf(profileService.findAll().size() + 1));
         profile.setProfileName("TestName");
         profile.setUser(getTestUser());
         profile.setBalance(BigDecimal.valueOf(1230));
@@ -70,7 +66,6 @@ public class ProfileServiceTest {
 
     private User getTestUser() {
         User user = new User();
-        user.setId(Long.valueOf(userService.findAll().size() + 1));
         user.setUsername("TestName");
         user.setPassword("TestPassword");
         user.setEmail("TestEmail@gmail.com");
