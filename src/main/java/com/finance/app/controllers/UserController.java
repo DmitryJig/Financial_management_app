@@ -13,18 +13,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/users/{id}")
 //@Tag(name = "User controller", description = "Контроллер для сущности User")
 public class UserController {
     private final UserService userService;
     private final UserConverter userConverter;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<UserDto> findAll(){
         return userService.findAll().stream().map(userConverter::entityToDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     public UserDto findById(@PathVariable Long id){
         return userConverter.entityToDto(userService.findById(id));
     }
@@ -35,7 +35,7 @@ public class UserController {
        return userService.createUser(regUserDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public void deleteUserById(@PathVariable Long id){
         userService.deleteById(id);
     }
