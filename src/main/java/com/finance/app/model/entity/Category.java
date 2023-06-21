@@ -14,8 +14,15 @@ import java.util.Objects;
 @Table(name = "categories")
 public class Category {
     @Id
+    @SequenceGenerator(
+            name = "CATEGORIES_SEC",
+            sequenceName = "CATEGORIES_SEC",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "CATEGORIES_SEC")
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title")
     private String title;

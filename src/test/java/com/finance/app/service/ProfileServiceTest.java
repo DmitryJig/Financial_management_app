@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
+@ActiveProfiles("test")
 public class ProfileServiceTest {
     @Autowired
     ProfileService profileService;

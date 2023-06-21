@@ -17,8 +17,16 @@ import java.util.Objects;
 public class Report {
 
     @Id
+    @SequenceGenerator(
+            name = "REPORTS_SEC",
+            sequenceName = "REPORTS_SEC",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "REPORTS_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(name = "start_date")
     LocalDateTime startDate;

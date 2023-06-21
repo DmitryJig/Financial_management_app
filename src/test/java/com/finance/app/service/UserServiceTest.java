@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
+@ActiveProfiles("test")
 class UserServiceTest {
     @Autowired
     UserService userService;

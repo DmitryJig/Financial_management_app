@@ -14,8 +14,16 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Role {
     @Id
+    @SequenceGenerator(
+            name = "ROLES_SEC",
+            sequenceName = "ROLES_SEC",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ROLES_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "role_name")
     private String roleName;

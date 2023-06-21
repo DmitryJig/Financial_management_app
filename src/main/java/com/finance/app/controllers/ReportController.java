@@ -13,7 +13,7 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @GetMapping
+    @PostMapping
     public ReportResp getReport(@RequestBody ReportReq reportReq) {
         return reportService.createReport(reportReq);
     }
