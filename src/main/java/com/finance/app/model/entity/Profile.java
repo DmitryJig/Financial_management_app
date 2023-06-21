@@ -18,7 +18,7 @@ public class Profile {
     private Long id;
     @Column(name = "profile_name")
     private String profileName;
-    @OneToOne(mappedBy = "balance")
+    @OneToOne(mappedBy = "profile")
     private Balance balance;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

@@ -22,7 +22,6 @@ public class BalanceConverter {
 
     public Balance toEntity(BalanceDto dto) {
         var balance = new Balance();
-        balance.setId(dto.getId());
         balance.setAmount(dto.getAmount());
         balance.setProfile(profileService.findById(dto.getProfileId()));
         return balance;

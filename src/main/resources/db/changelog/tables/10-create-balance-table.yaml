@@ -4,7 +4,7 @@ databaseChangeLog:
       author: A.Gladkova
       changes:
         - createTable:
-            tableName: balance
+            tableName: balances
             columns:
               - column:
                   name: id

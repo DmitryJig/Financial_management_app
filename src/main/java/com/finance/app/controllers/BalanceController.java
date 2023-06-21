@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/balance/{profileId}")
+@RequestMapping("/api/v1/profile/{id}/balances")
 public class BalanceController {
     private final BalanceConverter balanceConverter;
     private final BalanceService balanceService;
 
     @GetMapping("/{balanceId}")
-    public BalanceDto getBalance(@PathVariable Long profileId, @PathVariable Long balanceId) {
-        return balanceConverter.toDto(balanceService.findByProfileId(balanceId, profileId));
+    public BalanceDto getBalance(@PathVariable Long balanceId) {
+        return balanceConverter.toDto(balanceService.findById(balanceId));
     }
 
     @DeleteMapping("/{balanceId}")
-    public void deleteBalance(@PathVariable Long profileId, @PathVariable Long balanceId) {
-        balanceService.deleteByBalanceIdAndProfileId(balanceId, profileId);
+    public void deleteBalance(@PathVariable Long balanceId) {
+        balanceService.deleteById(balanceId);
     }
 
     @PostMapping

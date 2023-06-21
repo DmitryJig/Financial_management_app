@@ -7,7 +7,7 @@ import lombok.Value;
 public class ProfileDto {
     Long id;
     String profileName;
-    Long balance;
+    Long balanceId;
     Long userId;
 
 }

@@ -11,13 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProfileConverter {
     private final UserService userService;
-    private final BalanceService balanceService;
 
     public Profile dtoToEntity(ProfileDto dto) {
         var profile = new Profile();
         profile.setId(dto.getId());
         profile.setProfileName(dto.getProfileName());
-        profile.setBalance(balanceService.findById(dto.getId()));
         profile.setUser(userService.findById(dto.getId()));
         return profile;
     }

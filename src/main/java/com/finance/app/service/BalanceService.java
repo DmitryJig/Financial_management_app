@@ -18,15 +18,13 @@ public class BalanceService {
         return balanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", id)));
     }
 
+    public void deleteById(Long id) {
+        balanceRepository.deleteById(id);
+    }
+
     public BalanceDto save(Balance balance){
         return balanceConverter.toDto(balanceRepository.save(balance));
     }
 
-    public Balance findByProfileId(Long balanceId, Long profileId){
-        return balanceRepository.findByIdAndProfileId(balanceId, profileId).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", balanceId)));
-    }
 
-    public void deleteByBalanceIdAndProfileId(Long balanceId, Long profileId){
-        balanceRepository.deleteByIdAndProfileId(balanceId, profileId);
-    }
 }
