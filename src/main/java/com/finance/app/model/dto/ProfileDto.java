@@ -11,5 +11,4 @@ public class ProfileDto {
     String profileName;
     BigDecimal balance;
     Long userId;
-
 }
