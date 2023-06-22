@@ -22,13 +22,13 @@ public class CategoryController {
         return categoryService.getAllCategories().stream().map(categoryConverter::entityToDTO).collect(Collectors.toList());
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/{id}")
     public CategoryDto findById(@PathVariable Long id){
         Category category = categoryService.getCategoryById(id);
         return categoryConverter.entityToDTO(category);
     }
 
-    @GetMapping("/byTitle/{title}")
+    @GetMapping("/{title}")
     public CategoryDto findByName(@PathVariable String title){
         Category category = categoryService.getCategoryByTitle(title);
         return categoryConverter.entityToDTO(category);
@@ -40,12 +40,12 @@ public class CategoryController {
         return categoryService.createOrUpdateCategory(categoryDto);
     }
 
-    @DeleteMapping("/byId/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
     }
 
-    @DeleteMapping("/byTitle/{title}")
+    @DeleteMapping("/{title}")
     public void deleteCategoryByName(@PathVariable String title) {
         categoryService.deleteCategoryByTitle(title);
     }

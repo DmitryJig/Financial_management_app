@@ -31,7 +31,6 @@ public class Profile {
     @Column(name = "balance")
     private BigDecimal balance;    //TODO вынести balance в отдельный класс Entity и реализовать к ней слои доступа к данным и контроллеры
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "profile")

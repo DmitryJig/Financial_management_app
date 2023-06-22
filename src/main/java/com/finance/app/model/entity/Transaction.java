@@ -1,11 +1,13 @@
 package com.finance.app.model.entity;
 
+import com.finance.app.model.enums.TypeOfTransaction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,10 +33,11 @@ public class Transaction {
     private String description;
     @Column(name = "amount")
     private BigDecimal amount;
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private String type;
+    private TypeOfTransaction type;
     @Column(name = "created")
-    private LocalDateTime created;
+    private LocalDate created;
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
