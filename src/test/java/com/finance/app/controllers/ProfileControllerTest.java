@@ -1,31 +1,26 @@
 package com.finance.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.app.AppApplication;
 import com.finance.app.controllers.annotation.IT;
-import com.finance.app.converters.ProfileConverter;
 import com.finance.app.exception.ResourceNotFoundException;
-import com.finance.app.model.entity.Profile;
-import com.finance.app.model.entity.User;
+import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.service.ProfileService;
-import com.finance.app.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static com.jayway.jsonpath.JsonPath.*;
 
 @IT
 @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
@@ -36,61 +31,69 @@ public class ProfileControllerTest {
     ObjectMapper objectMapper;
     @Autowired
     ProfileService profileService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    ProfileConverter profileConverter;
 
     @Test
     void findById() throws Exception {
-        mockMvc.perform(get("/api/v1/profile/1/1"))
+        mockMvc.perform(get("/api/v1/users/1/profiles/1"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.profileName").value("profileAdmin"))
+                .andExpect(jsonPath("$.profileName").value("Family"))
                 .andExpect(jsonPath("$.balance").value(100000.00))
                 .andExpect(jsonPath("$.userId").value(1));
     }
 
     @Test
+    void getProfilesByUserIdTest() throws Exception {
+        int size = profileService.findAll(1L).getProfileDtos().size();
+
+        mockMvc.perform(get("/api/v1/users/1/profiles"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.profileDtos", hasSize(size)));
+    }
+
+    @Test
     void createProfileTest() throws Exception {
-        Profile testProfile = getTestProfile();
-        testProfile.setUser(userService.save(testProfile.getUser()));
-        var profileDto = profileConverter.entityToDto(testProfile);
-        mockMvc.perform(
-                post("/api/v1/profile/" + profileDto.getUserId())
-                        .content(objectMapper.writeValueAsString(profileDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk());
-        testProfile.setId(profileService.findAll().stream()
-                .filter(p -> testProfile.getProfileName().equals(p.getProfileName()))
-                .findFirst().get().getId());
-        profileService.deleteByProfileId(testProfile.getId());
+        var testProfile = getTestProfile();
+
+        MvcResult result = mockMvc.perform(
+                        post("/api/v1/users/1/profiles")
+                                .content(objectMapper.writeValueAsString(testProfile))
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        String savedProfileName = read(response, "$.profileName");
+        BigDecimal savedBalance = BigDecimal.valueOf(Integer.parseInt(read(response, "$.balance").toString()));
+
+        assertAll(
+                () -> assertEquals(testProfile.getProfileName(), savedProfileName),
+                () -> assertEquals(testProfile.getBalance(), savedBalance)
+        );
+
     }
 
     @Test
     void deleteById() throws Exception {
-        Profile testProfile = getTestProfile();
-        testProfile.setId(profileService.save(testProfile).getId());
-        Long testId = testProfile.getId();
-        mockMvc.perform(delete("/api/v1/profile/" + testProfile.getUser().getId() + "/" + testId))
+        var testProfile = getTestProfile();
+        testProfile = profileService.save(testProfile);
+        Long profileId = testProfile.getId();
+
+        mockMvc.perform(delete("/api/v1/users/1/profiles/" + profileId))
                 .andExpect(status().isOk());
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> profileService.findById(testId));
+
+        assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileId(profileId));
     }
 
-    private Profile getTestProfile() {
-        Profile profile = new Profile();
-        profile.setProfileName("TestName");
-        profile.setUser(getTestUser());
-        profile.setBalance(BigDecimal.valueOf(1230));
-        return profile;
-    }
-
-    private User getTestUser() {
-        User user = new User();
-        user.setUsername("TestName");
-        user.setPassword("TestPassword");
-        user.setEmail("TestEmail@gmail.com");
-        return user;
+    private ProfileDto getTestProfile() {
+        return new ProfileDto(
+                null,
+                "TestName",
+                BigDecimal.valueOf(1230),
+                1L
+        );
     }
 }
