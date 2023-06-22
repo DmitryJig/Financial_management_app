@@ -20,4 +20,11 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+              - column:
+                  name: profile_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: profile_fk
+                    references: profiles(id)
+                    nullable: false
 
