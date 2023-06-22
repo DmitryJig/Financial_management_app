@@ -9,7 +9,7 @@ insert into user_roles(user_id, role_id) values (1, 1), (1, 2), (2, 2);
 
 insert into profiles(profile_name, balance, user_id) values ('profileAdmin', 100000, 1);
 
-insert into categories(title) values ('питание'), ('спорт'), ('отдых');
+insert into categories(title, profile_id) values ('питание', 1), ('спорт', 1), ('отдых', 1);
 
 insert into transactions(description, amount, type, created, profile_id, category_id) values
 ('Купил продукты на неделю', 7829.5, 'EXPENSE',  now(), 1, 1),

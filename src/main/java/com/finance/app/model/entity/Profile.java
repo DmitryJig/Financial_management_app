@@ -26,6 +26,8 @@ public class Profile {
     private User user;
     @OneToMany(mappedBy = "profile")
     private Collection<Transaction> transactions;
+    @OneToMany(mappedBy = "profile")
+    private Collection<Category> categories;
 
     @Override
     public boolean equals(Object o) {
