@@ -8,6 +8,8 @@ import com.finance.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/profile/{userId}")
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
     private final ProfileConverter profileConverter;
     private final ProfileService profileService;
-    private final UserService userService;
+
+    @GetMapping
+    public List<ProfileDto> getAllProfilesByUserId(@PathVariable Long userId){
+        return profileService.findAllByUserId(userId).stream().map(profileConverter::entityToDto).collect(Collectors.toList());
+    }
 
     @GetMapping("/{profileId}")
     public ProfileDto getProfile(@PathVariable Long userId, @PathVariable Long profileId) {
@@ -27,10 +33,6 @@ public class ProfileController {
         return profileService.save(profileConverter.dtoToEntity(profDto));
     }
 
-//    @DeleteMapping("/{profileId}")
-//    public void deleteProfile(@PathVariable Long userId, @PathVariable Long profileId) {
-//        profileService.deleteByProfileIdAndUserId(profileId, userId);
-//    }
     @DeleteMapping("/{profileId}")
     public void deleteProfile(@PathVariable Long profileId) {
         profileService.deleteByProfileId(profileId);

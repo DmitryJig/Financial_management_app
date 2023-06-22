@@ -24,6 +24,10 @@ public class ProfileService {
         return profileRepository.findByIdAndUserId(profileId, userId).orElseThrow(() -> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId)));
     }
 
+    public List<Profile> findAllByUserId(Long userId){
+        return profileRepository.findAllByUserId(userId);
+    }
+
     public Profile findById(Long id) {
         return profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Profile with id = %d not found", id)));
     }
