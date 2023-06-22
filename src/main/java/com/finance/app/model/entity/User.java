@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,8 +14,16 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
     @Id
+    @SequenceGenerator(
+            name = "USERS_SEC",
+            sequenceName = "USERS_SEC",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "USERS_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "user_name")
     private String username;
@@ -27,7 +36,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @ToString.Exclude
-    private Collection<Role> roles;
+    private Set<Role> roles;
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Collection<Profile> profiles;

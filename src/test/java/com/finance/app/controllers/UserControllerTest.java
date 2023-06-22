@@ -1,33 +1,30 @@
 package com.finance.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.app.AppApplication;
+;
+import com.finance.app.controllers.annotation.IT;
 import com.finance.app.exception.ResourceNotFoundException;
-import com.finance.app.model.dto.RegistrationUserDto;
+import com.finance.app.model.dto.RegUserDto;
 import com.finance.app.model.dto.UserDto;
+import com.finance.app.model.entity.Role;
 import com.finance.app.model.entity.User;
 import com.finance.app.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
-@AutoConfigureMockMvc
-@AutoConfigureWebTestClient
+@IT
+@WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
 public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -37,7 +34,6 @@ public class UserControllerTest {
     UserService userService;
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void findAll() throws Exception {
         // Ожидаем тело ответа [{"id":1,"username":"Admin","email":"admin@mail.com"},{"id":2,"username":"Manager","email":"manager@mail.com"}]
         UserDto testUserDto1 = new UserDto(1L, "Admin", "admin@mail.com");
@@ -50,7 +46,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void findById() throws Exception {
         mockMvc.perform(get("/api/v1/users/1"))
                 .andDo(MockMvcResultHandlers.print())
@@ -65,7 +60,6 @@ public class UserControllerTest {
      * и проверяем что эта ошибка ResourceNotFoundException
      */
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void findByIdWhenNotExistUser() throws Exception {
             mockMvc.perform(get("/api/v1/users/5"))
                     .andExpect(status().isNotFound())
@@ -75,25 +69,24 @@ public class UserControllerTest {
     @Test
     void createUserTest() throws Exception {
         User testUser = getTestUser();
-        RegistrationUserDto registrationUserDto =
-                new RegistrationUserDto(
+        RegUserDto regUserDto =
+                new RegUserDto(
                         testUser.getUsername(),
                         testUser.getPassword(),
-                        testUser.getPassword(),
-                        testUser.getEmail()
+                        testUser.getEmail(),
+                        testUser.getRoles()
                 );
         mockMvc.perform(
-                post("/api/v1/users/registration")
-                        .content(objectMapper.writeValueAsString(registrationUserDto))
+                post("/api/v1/users/create")
+                        .content(objectMapper.writeValueAsString(regUserDto))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
         testUser = userService.getUserByUsername(testUser.getUsername());
         userService.delete(testUser);
     }
 
     @Test
-    @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
     void deleteById() throws Exception {
         User testUser = getTestUser();
         userService.save(testUser);
@@ -105,10 +98,15 @@ public class UserControllerTest {
     }
 
     private User getTestUser(){
+        Role role = new Role();
+        role.setId(1L);
+        role.setRoleName("ROLE_MANAGER");
+
         User user = new User();
         user.setUsername("TestName");
         user.setPassword("TestPassword");
         user.setEmail("TestEmail@gmail.com");
+        user.setRoles(Set.of(role));
         return user;
     }
 }

@@ -1,13 +1,16 @@
 package com.finance.app.model.dto;
 
 
+import com.finance.app.model.entity.Role;
 import lombok.Value;
+
+import java.util.Set;
 
 
 @Value
-public class RegistrationUserDto {
+public class RegUserDto {
     String username;
     String password;
-    String confirmPassword;
     String email;
+    Set<Role> roles;
 }

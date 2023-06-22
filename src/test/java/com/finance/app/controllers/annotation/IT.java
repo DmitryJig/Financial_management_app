@@ -1,4 +1,4 @@
-package controllers.annotation;
+package com.finance.app.controllers.annotation;
 
 import com.finance.app.AppApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public @interface IT {
 }
