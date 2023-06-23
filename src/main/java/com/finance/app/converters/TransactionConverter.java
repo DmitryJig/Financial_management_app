@@ -14,6 +14,7 @@ public class TransactionConverter {
 
     private final ProfileService profileService;
     private final CategoryService categoryService;
+    private final ProfileConverter profileConverter;
 
     public TransactionDto toDto(Transaction entity) {
 
@@ -35,7 +36,7 @@ public class TransactionConverter {
         transaction.setAmount(dto.getAmount());
         transaction.setType(TypeOfTransaction.valueOf(dto.getType()));
         transaction.setCreated(dto.getCreated());
-        transaction.setProfile(profileService.findById(dto.getProfileId()));
+        transaction.setProfile(profileConverter.dtoToEntity(profileService.findByProfileId(dto.getProfileId())));
         transaction.setCategory(categoryService.getCategoryById(dto.getCategoryId()));
         return transaction;
     }

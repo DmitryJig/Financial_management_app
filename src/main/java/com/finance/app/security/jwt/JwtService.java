@@ -77,4 +77,13 @@ public class JwtService {
                 .getBody();
     }
 
+    public Long getIdFromRequest(String requestUri) {
+        return Long.parseLong(requestUri.split("users")[1].split("/")[1]);
+    }
+
+    public Long getUserId(String token) {
+        Claims claims = getAllClaimsFromToken(token);
+        return claims.get("id", Long.class);
+    }
+
 }

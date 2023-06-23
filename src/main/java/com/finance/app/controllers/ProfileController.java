@@ -1,39 +1,38 @@
 package com.finance.app.controllers;
 
 
-import com.finance.app.converters.ProfileConverter;
 import com.finance.app.model.dto.ProfileDto;
+import com.finance.app.model.dto.ProfileResponse;
 import com.finance.app.service.ProfileService;
-import com.finance.app.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/profile/{userId}")
+@RequestMapping("api/v1/users/{userId}/profiles")
 @RequiredArgsConstructor
 public class ProfileController {
-    private final ProfileConverter profileConverter;
     private final ProfileService profileService;
 
-    @GetMapping
-    public List<ProfileDto> getAllProfilesByUserId(@PathVariable Long userId){
-        return profileService.findAllByUserId(userId).stream().map(profileConverter::entityToDto).collect(Collectors.toList());
+    @GetMapping("/{profileId}")
+    public ProfileDto getProfile(@PathVariable Long profileId) {
+        return profileService.findByProfileId(profileId);
     }
 
-    @GetMapping("/{profileId}")
-    public ProfileDto getProfile(@PathVariable Long userId, @PathVariable Long profileId) {
-        return profileConverter.entityToDto(profileService.findByIdAndProfileId(profileId, userId));
+    @GetMapping
+    public ProfileResponse getProfiles(@PathVariable Long userId) {
+        return profileService.findAll(userId);
     }
 
     @PostMapping
-    public ProfileDto saveOrUpdate(@RequestBody ProfileDto profDto) {
-        return profileService.save(profileConverter.dtoToEntity(profDto));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProfileDto createProfile(@RequestBody ProfileDto profDto) {
+        return profileService.save(profDto);
     }
 
     @DeleteMapping("/{profileId}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteProfile(@PathVariable Long profileId) {
         profileService.deleteByProfileId(profileId);
     }
