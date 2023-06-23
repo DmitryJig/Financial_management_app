@@ -2,7 +2,6 @@ package com.finance.app.converters;
 
 import com.finance.app.model.dto.ProfileDto;
 import com.finance.app.model.entity.Profile;
-import com.finance.app.service.BalanceService;
 import com.finance.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

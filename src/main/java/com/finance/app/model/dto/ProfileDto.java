@@ -9,5 +9,4 @@ public class ProfileDto {
     String profileName;
     Long balanceId;
     Long userId;
-
 }

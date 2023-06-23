@@ -1,5 +1,6 @@
 package com.finance.app.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,14 +13,15 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "balances")
 public class Balance {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "amount")
-    private BigDecimal amount;
+    @Column(name = "balance")
+    private BigDecimal balance;
     @OneToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;

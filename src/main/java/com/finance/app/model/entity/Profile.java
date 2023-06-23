@@ -13,8 +13,16 @@ import java.util.Objects;
 @Table(name = "profiles")
 public class Profile {
     @Id
+    @SequenceGenerator(
+            name = "PROFILES_SEC",
+            sequenceName = "PROFILES_SEC",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "PROFILES_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "profile_name")
     private String profileName;

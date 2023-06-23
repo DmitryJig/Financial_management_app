@@ -15,7 +15,7 @@ databaseChangeLog:
                     primaryKeyName: balance_pk
                     nullable: false
               - column:
-                  name: amount
+                  name: balance
                   type: numeric(15,2)
                   constraints:
                     nullable: false
@@ -26,3 +26,4 @@ databaseChangeLog:
                     foreignKeyName: profile_fk
                     references: profiles(id)
                     nullable: false
+

@@ -15,14 +15,14 @@ public class BalanceConverter {
     public BalanceDto toDto(Balance entity) {
         return new BalanceDto(
                 entity.getId(),
-                entity.getAmount(),
+                entity.getBalance(),
                 entity.getProfile().getId()
         );
     }
 
     public Balance toEntity(BalanceDto dto) {
         var balance = new Balance();
-        balance.setAmount(dto.getAmount());
+        balance.setBalance(dto.getAmount());
         balance.setProfile(profileService.findById(dto.getProfileId()));
         return balance;
     }

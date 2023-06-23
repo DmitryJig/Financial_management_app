@@ -7,7 +7,7 @@ insert into roles(role_name) values ('ROLE_MANAGER'), ('ROLE_ADMIN'), ('ROLE_EMP
 
 insert into user_roles(user_id, role_id) values (1, 1), (1, 2), (2, 2);
 
-insert into profiles(profile_name, balance, user_id) values ('profileAdmin', 100000, 1);
+insert into profiles(profile_name, user_id) values ('profileAdmin', 1);
 
 insert into categories(title) values ('питание'), ('спорт'), ('отдых');
 
@@ -16,4 +16,5 @@ insert into transactions(description, amount, type, created, profile_id, categor
 ('Билеты в отпуск', 35000, 'EXPENSE' ,  now(), 1, 3),
 ('Абонемент в спортзал', 15000, 'EXPENSE',  now(), 1, 2);
 
+insert into balances(balance, profile_id) values (100000, 1);
 
