@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/transactions/{profileId}")
+@RequestMapping("/api/v1/users/{userId}/transactions/{profileId}")
 public class TransactionController {
 
     private final TransactionService transactionService;
