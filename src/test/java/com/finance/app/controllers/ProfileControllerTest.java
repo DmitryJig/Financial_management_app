@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.app.controllers.annotation.IT;
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.ProfileDto;
+import com.finance.app.model.dto.ProfileReq;
 import com.finance.app.service.ProfileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ProfileControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.profileName").value("Family"))
-                .andExpect(jsonPath("$.balance").value(100000.00))
+                .andExpect(jsonPath("$.balanceId").value(1))
                 .andExpect(jsonPath("$.userId").value(1));
     }
 
@@ -55,11 +56,11 @@ public class ProfileControllerTest {
 
     @Test
     void createProfileTest() throws Exception {
-        var testProfile = getTestProfile();
+        var profileReq = getProfileReq();
 
         MvcResult result = mockMvc.perform(
                         post("/api/v1/users/1/profiles")
-                                .content(objectMapper.writeValueAsString(testProfile))
+                                .content(objectMapper.writeValueAsString(profileReq))
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isCreated())
                 .andReturn();
@@ -67,19 +68,19 @@ public class ProfileControllerTest {
         String response = result.getResponse().getContentAsString();
 
         String savedProfileName = read(response, "$.profileName");
-        BigDecimal savedBalance = BigDecimal.valueOf(Integer.parseInt(read(response, "$.balance").toString()));
+        Long userId = Long.parseLong(read(response, "$.userId").toString());
 
         assertAll(
-                () -> assertEquals(testProfile.getProfileName(), savedProfileName),
-                () -> assertEquals(testProfile.getBalance(), savedBalance)
+                () -> assertEquals(profileReq.getProfileName(), savedProfileName),
+                () -> assertEquals(profileReq.getUserId(), userId)
         );
 
     }
 
     @Test
     void deleteById() throws Exception {
-        var testProfile = getTestProfile();
-        testProfile = profileService.save(testProfile);
+        var profileReq = getProfileReq();
+        ProfileDto testProfile = profileService.save(profileReq);
         Long profileId = testProfile.getId();
 
         mockMvc.perform(delete("/api/v1/users/1/profiles/" + profileId))
@@ -92,7 +93,13 @@ public class ProfileControllerTest {
         return new ProfileDto(
                 null,
                 "TestName",
-                BigDecimal.valueOf(1230),
+                1L,
+                1L
+        );
+    }
+    private ProfileReq getProfileReq() {
+        return new ProfileReq(
+                "testProfile",
                 1L
         );
     }

@@ -40,7 +40,7 @@ public class UserControllerTest {
         UserDto testUserDto1 = new UserDto(1L, "Admin", "admin@mail.com");
         UserDto testUserDto2 = new UserDto(2L, "Manager", "manager@mail.com");
 
-        mockMvc.perform(get("/api/v1/users"))
+        mockMvc.perform(get("/api/v1/users/1/all"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(testUserDto1, testUserDto2))));
@@ -78,7 +78,7 @@ public class UserControllerTest {
                         testUser.getRoles()
                 );
         mockMvc.perform(
-                post("/api/v1/users/create")
+                post("/api/v1/users/1/create")
                         .content(objectMapper.writeValueAsString(regUserDto))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
