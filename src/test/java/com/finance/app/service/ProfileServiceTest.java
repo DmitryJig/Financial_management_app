@@ -2,13 +2,12 @@ package com.finance.app.service;
 
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.ProfileDto;
+import com.finance.app.model.dto.ProfileReq;
 import com.finance.app.model.dto.ProfileResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,16 +21,16 @@ public class ProfileServiceTest {
     @Test
     void findAllTest() {
         ProfileResponse profileResponse = profileService.findAll(1L);
-        assertTrue( profileResponse.getProfileDtos().size() > 1);
+        assertTrue(profileResponse.getProfileDtos().size() > 1);
     }
 
     @Test
     void saveTest() {
-        ProfileDto profile = getTestProfile();
-        ProfileDto savedProfile = profileService.save(profile);
+        ProfileReq req = getProfileReq();
+        ProfileDto savedProfile = profileService.save(req);
         assertAll(
                 () -> assertNotNull(savedProfile.getId()),
-                () -> assertEquals(profile.getProfileName(), savedProfile.getProfileName())
+                () -> assertEquals(req.getProfileName(), savedProfile.getProfileName())
         );
     }
 
@@ -56,11 +55,9 @@ public class ProfileServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileId(profileDto.getId()));
     }
 
-    private ProfileDto getTestProfile() {
-        return new ProfileDto(
-                null,
-                "TestName",
-                BigDecimal.valueOf(1230),
+    private ProfileReq getProfileReq() {
+        return new ProfileReq(
+                "testProfile",
                 1L
         );
     }

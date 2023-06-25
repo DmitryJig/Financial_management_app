@@ -2,6 +2,7 @@ package com.finance.app.controllers;
 
 
 import com.finance.app.model.dto.ProfileDto;
+import com.finance.app.model.dto.ProfileReq;
 import com.finance.app.model.dto.ProfileResponse;
 import com.finance.app.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class ProfileController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProfileDto createProfile(@RequestBody ProfileDto profDto) {
-        return profileService.save(profDto);
+    public ProfileDto createProfile(@RequestBody ProfileReq req) {
+        return profileService.save(req);
     }
 
     @DeleteMapping("/{profileId}")
