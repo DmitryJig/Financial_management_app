@@ -33,6 +33,12 @@ public class ProfileService {
     public ProfileDto findByProfileId(Long profileId) {
         return profileConverter.entityToDto(profileRepository.findById(profileId).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId))));
+
+    }
+
+    public ProfileDto findByProfileIdAndUserId(Long profileId, Long userId) {
+        return profileConverter.entityToDto(profileRepository.findByIdAndUserId(profileId, userId).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId))));
     }
     @Transactional
     public ProfileDto save(ProfileReq req) {
@@ -48,7 +54,8 @@ public class ProfileService {
         return profileConverter.entityToDto(profile);
     }
 
-    public void deleteByProfileId(Long profileId) {
-        profileRepository.deleteById(profileId);
+    @Transactional
+    public void deleteByProfileIdAndUserId(Long profileId, Long userId) {
+        profileRepository.deleteByIdAndUserId(profileId, userId);
     }
 }

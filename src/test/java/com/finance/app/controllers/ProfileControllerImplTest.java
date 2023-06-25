@@ -14,8 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import java.math.BigDecimal;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -25,7 +23,7 @@ import static com.jayway.jsonpath.JsonPath.*;
 
 @IT
 @WithMockUser(username = "test@gmail.com", password = "test", roles = {"ADMIN", "USER"})
-public class ProfileControllerTest {
+public class ProfileControllerImplTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -86,17 +84,9 @@ public class ProfileControllerTest {
         mockMvc.perform(delete("/api/v1/users/1/profiles/" + profileId))
                 .andExpect(status().isOk());
 
-        assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileId(profileId));
+        assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileIdAndUserId(profileId, 1L));
     }
 
-    private ProfileDto getTestProfile() {
-        return new ProfileDto(
-                null,
-                "TestName",
-                1L,
-                1L
-        );
-    }
     private ProfileReq getProfileReq() {
         return new ProfileReq(
                 "testProfile",
