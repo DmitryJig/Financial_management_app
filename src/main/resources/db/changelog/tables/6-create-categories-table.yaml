@@ -28,4 +28,3 @@ databaseChangeLog:
                     references: profiles(id)
                     nullable: false
 
-

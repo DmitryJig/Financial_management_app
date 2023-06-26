@@ -34,6 +34,8 @@ public class Profile {
     private User user;
     @OneToMany(mappedBy = "profile")
     private Collection<Transaction> transactions;
+    @OneToMany(mappedBy = "profile")
+    private Collection<Category> categories;
 
     @OneToMany(mappedBy = "profile")
     private Collection<Category> categories;
