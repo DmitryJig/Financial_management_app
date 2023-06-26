@@ -36,7 +36,7 @@ public class ProfileServiceTest {
 
     @Test
     void findByProfileIdTest() {
-        ProfileDto profileDto = profileService.findByProfileId(1l);
+        ProfileDto profileDto = profileService.findByProfileIdAndUserId(1L, 1L);
         assertAll(
                 () -> assertEquals(1L, profileDto.getId()),
                 () -> assertEquals("Family", profileDto.getProfileName())
@@ -46,13 +46,13 @@ public class ProfileServiceTest {
 
     @Test
     void deleteTest() {
-        ProfileDto profileDto = profileService.findByProfileId(3L);
+        ProfileDto profileDto = profileService.findByProfileIdAndUserId(2L, 1L);
 
         assertNotNull(profileDto);
 
-        profileService.deleteByProfileId(profileDto.getId());
+        profileService.deleteByProfileIdAndUserId(profileDto.getId(), 1L);
 
-        assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileId(profileDto.getId()));
+        assertThrows(ResourceNotFoundException.class, () -> profileService.findByProfileIdAndUserId(profileDto.getId(), 1L));
     }
 
     private ProfileReq getProfileReq() {

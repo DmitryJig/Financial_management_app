@@ -22,7 +22,7 @@ public class TransactionConverter {
                 entity.getId(),
                 entity.getDescription(),
                 entity.getAmount(),
-                entity.getType().name(),
+                entity.getType(),
                 entity.getCreated(),
                 entity.getProfile().getId(),
                 entity.getCategory().getId()
@@ -34,7 +34,7 @@ public class TransactionConverter {
         transaction.setId(dto.getId());
         transaction.setDescription(dto.getDescription());
         transaction.setAmount(dto.getAmount());
-        transaction.setType(TypeOfTransaction.valueOf(dto.getType()));
+        transaction.setType(dto.getType());
         transaction.setCreated(dto.getCreated());
         transaction.setProfile(profileConverter.dtoToEntity(profileService.findByProfileId(dto.getProfileId())));
         transaction.setCategory(categoryService.getCategoryById(dto.getCategoryId()));

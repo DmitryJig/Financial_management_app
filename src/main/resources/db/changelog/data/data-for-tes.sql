@@ -15,7 +15,7 @@ insert into categories(title) values ('питание'), ('спорт'), ('от�
 
 insert into transactions(description, amount, type, created, profile_id, category_id) values
 ('Купил продукты на неделю', 7829.5, 'EXPENSE',  now(), 1, 1),
-('Билеты в отпуск', 35000, 'EXPENSE' ,  now(), 1, 3),
+('Билеты в отпуск', 35000, 'INCOME' ,  now(), 1, 3),
 ('Абонемент в спортзал', 15000, 'EXPENSE',  now(), 1, 2);
 
 
