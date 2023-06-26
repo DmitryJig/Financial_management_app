@@ -34,7 +34,7 @@ databaseChangeLog:
       changes:
         - createSequence:
             sequenceName: PROFILES_SEC
-            startValue: 2
+            startValue: 4
   - changeSet:
       id: sequence_categories_sec
       author: i.kalendarev

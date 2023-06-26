@@ -10,6 +10,7 @@ import com.finance.app.model.entity.Role;
 import com.finance.app.model.entity.User;
 import com.finance.app.service.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,12 +35,12 @@ public class UserControllerTest {
     UserService userService;
 
     @Test
+    @DisplayName("Ожидаем тело ответа [{\"id\":1,\"username\":\"Admin\",\"email\":\"admin@mail.com\"},{\"id\":2,\"username\":\"Manager\",\"email\":\"manager@mail.com\"}]")
     void findAll() throws Exception {
-        // Ожидаем тело ответа [{"id":1,"username":"Admin","email":"admin@mail.com"},{"id":2,"username":"Manager","email":"manager@mail.com"}]
         UserDto testUserDto1 = new UserDto(1L, "Admin", "admin@mail.com");
         UserDto testUserDto2 = new UserDto(2L, "Manager", "manager@mail.com");
 
-        mockMvc.perform(get("/api/v1/users"))
+        mockMvc.perform(get("/api/v1/users/1/all"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(testUserDto1, testUserDto2))));
@@ -77,7 +78,7 @@ public class UserControllerTest {
                         testUser.getRoles()
                 );
         mockMvc.perform(
-                post("/api/v1/users/create")
+                post("/api/v1/users/1/create")
                         .content(objectMapper.writeValueAsString(regUserDto))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
