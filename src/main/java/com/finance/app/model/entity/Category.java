@@ -1,14 +1,14 @@
 package com.finance.app.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categories")
@@ -29,6 +29,19 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Collection<Transaction> transactions;
     @ManyToOne
-    @JoinColumn(name="profile_id")
+    @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id != null && id.equals(category.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
