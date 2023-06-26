@@ -37,8 +37,6 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private Collection<Category> categories;
 
-    @OneToMany(mappedBy = "profile")
-    private Collection<Category> categories;
 
     @Override
     public boolean equals(Object o) {
