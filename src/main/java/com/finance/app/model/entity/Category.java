@@ -28,4 +28,10 @@ public class Category {
     private String title;
     @OneToMany(mappedBy = "category")
     private Collection<Transaction> transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
+
+
 }

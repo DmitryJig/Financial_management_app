@@ -35,6 +35,9 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private Collection<Transaction> transactions;
 
+    @OneToMany(mappedBy = "profile")
+    private Collection<Category> categories;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
