@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .regexMatchers(HttpMethod.POST, "/login", "/api/v1/users/create").permitAll()
                 .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*").permitAll()
-                .regexMatchers("/api/users/*.*").hasRole("ADMIN")
+                .regexMatchers("/api/v1/users/*.*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
