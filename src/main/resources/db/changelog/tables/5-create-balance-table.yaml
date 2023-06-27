@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: profile
-      author: D.Jigalov
+      id: balance
+      author: A.Gladkova
       changes:
         - createTable:
-            tableName: profiles
+            tableName: balances
             columns:
               - column:
                   name: id
@@ -12,18 +12,18 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: profile_pk
+                    primaryKeyName: balance_pk
                     nullable: false
               - column:
-                  name: profile_name
-                  type: varchar(70)
+                  name: amount
+                  type: numeric(15,2)
                   constraints:
-                    unique: false
                     nullable: false
               - column:
-                  name: user_id
+                  name: profile_id
                   type: bigint
                   constraints:
-                    foreignKeyName: user_fk
-                    references: users(id)
+                    foreignKeyName: profile_fk
+                    references: profiles(id)
                     nullable: false
+                    unique: true

@@ -1,29 +1,40 @@
 package com.finance.app.model.entity;
 
 import com.finance.app.model.enums.TypeOfTransaction;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
     @Id
+    @SequenceGenerator(
+            name = "TRANSACTIONS_SEC",
+            sequenceName = "TRANSACTIONS_SEC",
+            allocationSize = 1
+
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "TRANSACTIONS_SEC"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "description")
     private String description;
     @Column(name = "amount")
     private BigDecimal amount;
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    @Enumerated(value = EnumType.STRING)
     private TypeOfTransaction type;
     @Column(name = "created")
     private LocalDate created;
@@ -34,16 +45,5 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
-        return id != null && id.equals(that.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

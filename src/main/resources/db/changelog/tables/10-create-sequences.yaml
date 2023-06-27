@@ -1,0 +1,44 @@
+version: 1.0
+databaseChangeLog:
+  - changeSet:
+      id: sequence_users_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: USERS_SEC
+            startValue: 3
+  - changeSet:
+      id: sequence_roles_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: ROLES_SEC
+            startValue: 4
+  - changeSet:
+      id: sequence_transactions_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: TRANSACTIONS_SEC
+            startValue: 4
+  - changeSet:
+      id: sequence_report_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: REPORTS_SEC
+            startValue: 1
+  - changeSet:
+      id: sequence_profiles_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: PROFILES_SEC
+            startValue: 4
+  - changeSet:
+      id: sequence_categories_sec
+      author: i.kalendarev
+      changes:
+        - createSequence:
+            sequenceName: CATEGORIES_SEC
+            startValue: 4

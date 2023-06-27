@@ -1,0 +1,11 @@
+spring:
+  datasource:
+#    docker run --name postgres_finance_test -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=finance_db_test -p 5454:5432 -d postgres:latest
+    url: jdbc:postgresql://localhost:5454/finance_db_test
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    show-sql: true

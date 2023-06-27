@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AppApplication.class)
-@ActiveProfiles("prod")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public @interface IT {
 }

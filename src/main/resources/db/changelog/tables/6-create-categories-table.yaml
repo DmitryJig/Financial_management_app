@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: caterory
+      id: category
       author: S.Voronkov
       changes:
         - createTable:

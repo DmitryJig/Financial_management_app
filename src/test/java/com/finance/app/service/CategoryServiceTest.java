@@ -1,5 +1,7 @@
 package com.finance.app.service;
 
+import com.finance.app.converters.CategoryConverter;
+import com.finance.app.model.dto.CategoryDto;
 import com.finance.app.model.entity.Category;
 import com.finance.app.repository.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -12,13 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-@ActiveProfiles("prod")
+@ActiveProfiles("test")
 public class CategoryServiceTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CategoryConverter categoryConverter;
     @Test
     public void testGetAllCategories() {
         createTestCategory();
@@ -30,14 +34,15 @@ public class CategoryServiceTest {
     @Test
     public void testGetCategoryById() {
         Category category = createTestCategory();
-        Category result = categoryService.getCategoryById(category.getId());
-        Assertions.assertEquals(result.getTitle(), category.getTitle());
+        Optional<Category> result = Optional.ofNullable(categoryService.getCategoryById(category.getId()));
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals("Category Test", result.get().getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
     }
     @Test
     public void testGetCategoryByTitle() {
         createTestCategory();
-        Optional<Category> result = categoryService.getCategoryByTitle("Category Test");
+        Optional<Category> result = Optional.ofNullable(categoryService.getCategoryByTitle("Category Test"));
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals("Category Test", result.get().getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
@@ -46,7 +51,7 @@ public class CategoryServiceTest {
     public void testCreateCategory() {
         Category category = new Category();
         category.setTitle("Category Test");
-        Category result = categoryService.createOrUpdateCategory(category);
+        CategoryDto result = categoryService.createOrUpdateCategory(categoryConverter.entityToDTO(category));
         Assertions.assertNotNull(result.getId());
         Assertions.assertEquals("Category Test", result.getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
@@ -55,7 +60,7 @@ public class CategoryServiceTest {
     public void testUpdateCategory() {
         Category category = createTestCategory();
         category.setTitle("Updated Category");
-        Category result = categoryService.createOrUpdateCategory(category);
+        CategoryDto result = categoryService.createOrUpdateCategory(categoryConverter.entityToDTO(category));
         Assertions.assertEquals("Updated Category", result.getTitle());
         categoryService.deleteCategoryByTitle("Updated Category");
     }
