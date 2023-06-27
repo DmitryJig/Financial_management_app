@@ -35,5 +35,11 @@ public class BalanceService {
         return balance;
     }
 
+    public Boolean editBalance(BigDecimal amount, Long profileId){
+       // balanceRepository.findById(profileId)
+        return true;
+    }
+
+
 
 }
