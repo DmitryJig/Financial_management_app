@@ -1,35 +1,41 @@
 package com.finance.app.controllers;
 
-import com.finance.app.converters.TransactionConverter;
 import com.finance.app.model.dto.TransactionDto;
-import com.finance.app.service.TransactionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/users/{userId}/transactions/{profileId}")
-public class TransactionController {
+@Tag(name = "Transaction Controller", description = "Transaction API")
+public interface TransactionController {
+    @Operation(summary = "Get all transactions by profile ID", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of transactions",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TransactionDto.class))})
+    })
+    List<TransactionDto> getAllTransaction(Long profileId);
 
-    private final TransactionService transactionService;
-    private final TransactionConverter transactionConverter;
+    @Operation(summary = "Delete transaction by ID and profile ID", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Transaction deleted"),
+            @ApiResponse(responseCode = "404", description = "Transaction not found", content = @Content)
+    })
+    void deleteTransactionById(Long profileId, Long transactionId);
 
-    @GetMapping
-    public List<TransactionDto> getAllTransaction(@PathVariable Long profileId) {
-        return transactionService.getAllByProfileId(profileId).stream().map(transactionConverter::toDto).collect(Collectors.toList());
-    }
-
-    @DeleteMapping("/{transactionId}")
-    public void deleteTransactionById(@PathVariable Long profileId, @PathVariable Long transactionId) {
-        transactionService.deleteByIdAndProfileId(transactionId, profileId);
-    }
-
-    @PostMapping
-    public TransactionDto addTransaction(@RequestBody TransactionDto dto) {
-        return transactionService.save(transactionConverter.toEntity(dto));
-    }
+    @Operation(summary = "Add a new transaction", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Added transaction",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TransactionDto.class))})
+    })
+    TransactionDto addTransaction(TransactionDto dto);
 
 }

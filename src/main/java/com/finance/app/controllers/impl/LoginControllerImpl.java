@@ -28,4 +28,3 @@ public class LoginControllerImpl implements LoginController {
         return jwtService.getLoginResponse(jwtUser);
     }
 }
-
