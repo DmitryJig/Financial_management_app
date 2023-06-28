@@ -1,52 +1,59 @@
 package com.finance.app.controllers;
 
-import com.finance.app.converters.CategoryConverter;
 import com.finance.app.model.dto.CategoryDto;
-import com.finance.app.model.entity.Category;
-import com.finance.app.service.CategoryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/categories")
-public class CategoryController {
-    private final CategoryService categoryService;
-    private final CategoryConverter categoryConverter;
+@Tag(name = "Category Controller", description = "Category API")
+public interface CategoryController {
+    @Operation(summary = "Get all categories", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of categories",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CategoryDto.class))})
+    })
+    List<CategoryDto> findAll();
 
-    @GetMapping
-    public List<CategoryDto> findAll(){
-        return categoryService.getAllCategories().stream().map(categoryConverter::entityToDTO).collect(Collectors.toList());
-    }
+    @Operation(summary = "Get category by ID", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CategoryDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
+    })
+    CategoryDto findById(Long id);
 
-    @GetMapping("/{id}")
-    public CategoryDto findById(@PathVariable Long id){
-        Category category = categoryService.getCategoryById(id);
-        return categoryConverter.entityToDTO(category);
-    }
+    @Operation(summary = "Get category by title", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CategoryDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
+    })
+    CategoryDto findByName(String title);
 
-    @GetMapping("/{title}")
-    public CategoryDto findByName(@PathVariable String title){
-        Category category = categoryService.getCategoryByTitle(title);
-        return categoryConverter.entityToDTO(category);
-    }
+    @Operation(summary = "Create or update a category", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created or updated category",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CategoryDto.class))})
+    })
+    CategoryDto createOrUpdateCategory(CategoryDto categoryDto);
 
+    @Operation(summary = "Delete category by ID", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category deleted"),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
+    })
+    void deleteCategoryById(Long id);
 
-    @PostMapping
-    public CategoryDto createOrUpdateCategory(@RequestBody CategoryDto categoryDto) {
-        return categoryService.createOrUpdateCategory(categoryDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCategoryById(@PathVariable Long id) {
-        categoryService.deleteCategoryById(id);
-    }
-
-    @DeleteMapping("/{title}")
-    public void deleteCategoryByName(@PathVariable String title) {
-        categoryService.deleteCategoryByTitle(title);
-    }
+    @Operation(summary = "Delete category by title", security = @SecurityRequirement(name = "JWT"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category deleted"),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
+    })
+    void deleteCategoryByName(String title);
 }
