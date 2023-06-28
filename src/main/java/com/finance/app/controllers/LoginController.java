@@ -11,13 +11,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Tag(name = "Пользователь", description = "Контроллер страницы отправки логина")
+@Tag(name = "Login Controller", description = "Login API")
 public interface LoginController {
 
-    @Operation(summary = "Отправка логина и пароля")
+    @Operation(summary = "Send login and password")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Успешная аутентификация и получение токена."),
-            @ApiResponse(responseCode = "401", description = "Неверные учетные данные пользователя.")
+            @ApiResponse(responseCode = "200", description = "Successful authentication and token retrieval."),
+            @ApiResponse(responseCode = "401", description = "Invalid user credentials.")
     })
     @ResponseStatus(HttpStatus.OK)
     LoginResponse getToken(@RequestBody @Validated AccountCredentials credentials);
