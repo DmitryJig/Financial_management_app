@@ -18,7 +18,7 @@ public class BalanceService {
     private final BalanceConverter balanceConverter;
 
     public BalanceDto findById(Long id) {
-        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
+        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
     }
 
     public BalanceDto findByBalanceIdAndProfileId(Long balanceId, Long profileId) {
@@ -35,11 +35,12 @@ public class BalanceService {
         return balance;
     }
 
-    public Boolean editBalance(BigDecimal amount, Long profileId){
-       // balanceRepository.findById(profileId)
-        return true;
+    public void editBalance(BigDecimal amount, Long profileId) {
+        Balance balance = balanceRepository.findByProfileId(profileId).get();
+        BigDecimal balanceAmount = balance.getAmount();
+        balance.setAmount(balanceAmount.add(amount));
+        balanceRepository.save(balance);
     }
-
 
 
 }

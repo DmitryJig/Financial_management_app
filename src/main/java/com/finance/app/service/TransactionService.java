@@ -20,9 +20,7 @@ public class TransactionService {
     private final BalanceService balanceService;
 
     public TransactionDto save(Transaction transaction) {
-        balanceService.editBalance(transaction.getAmount(),transaction.getProfile().getId());
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.editBalance(transaction.getAmount(), transaction.getProfile().getId());
         return transactionConverter.toDto(transactionRepository.save(transaction));
     }
 
@@ -31,10 +29,7 @@ public class TransactionService {
     }
 
     public void deleteByIdAndProfileId(Long id, Long profileId) {
-       // BigDecimal x = transactionRepository.findById(id).get().getAmount();
-       //balanceService.editBalance(transactionRepository.findById(id).get().getAmount());
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.editBalance(transactionRepository.findById(id).get().getAmount().multiply(BigDecimal.valueOf(-1)), profileId);
         transactionRepository.deleteByIdAndProfileId(id, profileId);
     }
 
