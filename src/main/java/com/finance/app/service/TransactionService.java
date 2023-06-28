@@ -7,6 +7,7 @@ import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class TransactionService {
         return transactionRepository.findAllByProfileId(profileId);
     }
 
+    @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
         balanceService.editBalance(transactionRepository.findById(id).get().getAmount().multiply(BigDecimal.valueOf(-1)), profileId);
         transactionRepository.deleteByIdAndProfileId(id, profileId);
