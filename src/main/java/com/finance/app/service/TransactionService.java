@@ -6,6 +6,7 @@ import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,11 +16,10 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionConverter transactionConverter;
+    private final BalanceService balanceService;
 
     public TransactionDto save(Transaction transaction) {
-
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.editBalance(transaction, transaction.getProfile().getId(), false);
         return transactionConverter.toDto(transactionRepository.save(transaction));
     }
 
@@ -27,10 +27,9 @@ public class TransactionService {
         return transactionRepository.findAllByProfileId(profileId);
     }
 
+    @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
-
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.editBalance(transactionRepository.findById(id).get(), profileId, true);
         transactionRepository.deleteByIdAndProfileId(id, profileId);
     }
 

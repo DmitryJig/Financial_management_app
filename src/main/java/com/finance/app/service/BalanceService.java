@@ -5,6 +5,7 @@ import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.BalanceDto;
 import com.finance.app.model.entity.Balance;
 import com.finance.app.model.entity.Profile;
+import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,24 @@ public class BalanceService {
     }
 
 
-    public Balance createNewBalance(Profile profile) {
-        Balance balance = new Balance();
-        balance.setProfile(profile);
-        balance.setAmount(BigDecimal.ZERO);
-        balance = balanceRepository.save(balance);
-        return balance;
+    public void editBalance(Transaction transaction, Long profileId, Boolean deleteTransaction) {
+        Balance balance = balanceRepository.findByProfileId(profileId).get();
+        BigDecimal amount = transaction.getAmount();
+        switch (transaction.getType()) {
+            case EXPENSE:
+                if (!deleteTransaction) {
+                    amount = amount.multiply(BigDecimal.valueOf(-1));
+                }
+                break;
+            case INCOME:
+                if (deleteTransaction) {
+                    amount = amount.multiply(BigDecimal.valueOf(-1));
+                }
+                break;
+        }
+        BigDecimal balanceAmount = balance.getAmount();
+        balance.setAmount(balanceAmount.add(amount));
+        balanceRepository.save(balance);
     }
 
 
