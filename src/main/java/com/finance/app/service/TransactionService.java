@@ -21,7 +21,7 @@ public class TransactionService {
     private final BalanceService balanceService;
 
     public TransactionDto save(Transaction transaction) {
-        balanceService.editBalance(transaction.getAmount(), transaction.getProfile().getId());
+        balanceService.editBalance(transaction, transaction.getProfile().getId(), false);
         return transactionConverter.toDto(transactionRepository.save(transaction));
     }
 
@@ -31,7 +31,7 @@ public class TransactionService {
 
     @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
-        balanceService.editBalance(transactionRepository.findById(id).get().getAmount().multiply(BigDecimal.valueOf(-1)), profileId);
+        balanceService.editBalance(transactionRepository.findById(id).get(), profileId, true);
         transactionRepository.deleteByIdAndProfileId(id, profileId);
     }
 

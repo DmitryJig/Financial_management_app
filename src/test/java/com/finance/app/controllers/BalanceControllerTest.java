@@ -1,6 +1,11 @@
 package com.finance.app.controllers;
 
 import com.finance.app.controllers.annotation.IT;
+import com.finance.app.model.dto.BalanceDto;
+import com.finance.app.model.entity.Balance;
+import com.finance.app.repository.BalanceRepository;
+import com.finance.app.service.BalanceService;
+import lombok.Value;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -24,8 +29,7 @@ public class BalanceControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.amount").value(500000.00))
+                .andExpect(jsonPath("$.amount").value(100))
                 .andExpect(jsonPath("$.profileId").value(1));
-
     }
 }

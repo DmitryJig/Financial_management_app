@@ -5,11 +5,14 @@ import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.BalanceDto;
 import com.finance.app.model.entity.Balance;
 import com.finance.app.model.entity.Profile;
+import com.finance.app.model.entity.Transaction;
+import com.finance.app.model.enums.TypeOfTransaction;
 import com.finance.app.repository.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +38,25 @@ public class BalanceService {
         return balance;
     }
 
-    public void editBalance(BigDecimal amount, Long profileId) {
+
+    public void editBalance(Transaction transaction, Long profileId, Boolean deleteTransaction) {
         Balance balance = balanceRepository.findByProfileId(profileId).get();
+        BigDecimal amount = transaction.getAmount();
+        switch (transaction.getType()) {
+            case EXPENSE:
+                if (!deleteTransaction) {
+                    amount = amount.multiply(BigDecimal.valueOf(-1));
+                }
+                break;
+            case INCOME:
+                if (deleteTransaction) {
+                    amount = amount.multiply(BigDecimal.valueOf(-1));
+                }
+                break;
+        }
         BigDecimal balanceAmount = balance.getAmount();
         balance.setAmount(balanceAmount.add(amount));
         balanceRepository.save(balance);
     }
-
 
 }
