@@ -8,6 +8,7 @@ import com.finance.app.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     @PostMapping
-    public CategoryDto createOrUpdateCategory(@RequestBody CategoryDto categoryDto) {
+    public CategoryDto createOrUpdateCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return categoryService.createOrUpdateCategory(categoryDto);
     }
 

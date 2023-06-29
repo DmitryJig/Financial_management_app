@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@RequestBody RegUserDto regUserDto) {
+    public UserDto createUser(@Valid @RequestBody RegUserDto regUserDto) {
         return userService.createUser(regUserDto);
     }
 

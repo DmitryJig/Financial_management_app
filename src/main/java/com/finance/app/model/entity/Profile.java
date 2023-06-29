@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -25,6 +27,8 @@ public class Profile {
     )
     @Column(name = "id")
     private Long id;
+    @NotNull(message = "Имя профиля не может быть пустым")
+    @Size(min = 1, max = 100, message = "Имя профиля должно содержать от {min} и не более {max} символов")
     @Column(name = "profile_name")
     private String profileName;
     @OneToOne(mappedBy = "profile", cascade = CascadeType.REMOVE)
