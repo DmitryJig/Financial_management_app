@@ -3,6 +3,9 @@ package com.finance.app.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -25,10 +28,16 @@ public class User {
     )
     @Column(name = "id")
     private Long id;
+    @NotBlank(message = "Имя пользователя не может быть пустым")
+    @Size(min = 3, max = 100, message = "Имя пользователя должно содержать не менее {min} и не более {max} символов")
     @Column(name = "user_name")
     private String username;
+    @NotBlank(message = "Пароль не может быть пустым")
+    @Size(min = 8, max = 100, message = "Пароль должен содержать не менее {min} и не более {max} символов")
     @Column(name = "password")
     private String password;
+    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Email должен быть допустимым адресом электронной почты")
     @Column(name = "email")
     private String email;
     @ManyToMany

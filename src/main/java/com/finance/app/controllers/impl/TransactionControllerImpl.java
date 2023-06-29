@@ -7,6 +7,7 @@ import com.finance.app.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +35,7 @@ public class TransactionControllerImpl implements TransactionController {
 
     @Override
     @PostMapping
-    public TransactionDto addTransaction(@RequestBody TransactionDto dto) {
+    public TransactionDto addTransaction(@Valid @RequestBody TransactionDto dto) {
         return transactionService.save(transactionConverter.toEntity(dto));
     }
-
 }
