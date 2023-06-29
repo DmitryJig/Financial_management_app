@@ -27,6 +27,13 @@ public class BalanceService {
         return balanceConverter.toDto(balance);
     }
 
+    public Balance createNewBalance(Profile profile) {
+        Balance balance = new Balance();
+        balance.setProfile(profile);
+        balance.setAmount(BigDecimal.ZERO);
+        balance = balanceRepository.save(balance);
+        return balance;
+    }
 
     public void editBalance(Transaction transaction, Long profileId, Boolean deleteTransaction) {
         Balance balance = balanceRepository.findByProfileId(profileId).get();
