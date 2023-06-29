@@ -17,9 +17,6 @@ public class BalanceService {
     private final BalanceRepository balanceRepository;
     private final BalanceConverter balanceConverter;
 
-    public BalanceDto findById(Long id) {
-        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
-    }
 
     public BalanceDto findByBalanceIdAndProfileId(Long balanceId, Long profileId) {
         Balance balance = balanceRepository.findByIdAndProfileId(balanceId, profileId).orElseThrow(() -> new ResourceNotFoundException(String.format("Balance with id = %d not found", balanceId)));
