@@ -44,7 +44,7 @@ public class Report {
     @DecimalMin(value = "0.01", inclusive = false, message = "Общая сумма расходов должна быть больше нуля")
     @Column(name = "total_expenses")
     BigDecimal totalExpenses;
-    @DecimalMin(value = "0.01", inclusive = false, message = "Общая сумма расходов должна быть больше нуля")
+    @DecimalMin(value = "0.01", inclusive = false, message = "Общая сумма доходов должна быть больше нуля")
     @Column(name = "total_income")
     BigDecimal totalIncome;
     @Column(name = "balance")
