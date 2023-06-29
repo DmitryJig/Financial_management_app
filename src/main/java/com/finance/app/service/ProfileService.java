@@ -40,6 +40,7 @@ public class ProfileService {
         return profileConverter.entityToDto(profileRepository.findByIdAndUserId(profileId, userId).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("Profile with id = %d not found", profileId))));
     }
+
     @Transactional
     public ProfileDto save(ProfileReq req) {
         Profile profile = new Profile();

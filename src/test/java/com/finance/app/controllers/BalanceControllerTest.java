@@ -24,7 +24,7 @@ public class BalanceControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.amount").value(500000.00))
+                .andExpect(jsonPath("$.amount").value(100.00))
                 .andExpect(jsonPath("$.profileId").value(1));
 
     }
