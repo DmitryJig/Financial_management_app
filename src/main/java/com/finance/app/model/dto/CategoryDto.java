@@ -9,5 +9,5 @@ import lombok.Value;
 public class CategoryDto {
     Long id;
     String title;
-    Profile profile;
+    Long profileId;
 }
