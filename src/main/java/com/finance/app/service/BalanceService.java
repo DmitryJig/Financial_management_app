@@ -3,9 +3,10 @@ package com.finance.app.service;
 import com.finance.app.converters.BalanceConverter;
 import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.BalanceDto;
+import com.finance.app.model.dto.TransactionDto;
 import com.finance.app.model.entity.Balance;
 import com.finance.app.model.entity.Profile;
-import com.finance.app.model.entity.Transaction;
+import com.finance.app.model.enums.TypeOfTransaction;
 import com.finance.app.repository.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class BalanceService {
     private final BalanceConverter balanceConverter;
 
     public BalanceDto findById(Long id) {
-        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
+        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
     }
 
     public BalanceDto findByBalanceIdAndProfileId(Long balanceId, Long profileId) {
@@ -35,25 +36,28 @@ public class BalanceService {
         return balance;
     }
 
-    public void editBalance(Transaction transaction, Long profileId, Boolean deleteTransaction) {
-        Balance balance = balanceRepository.findByProfileId(profileId).get();
+    public void changeBalance(TransactionDto transaction) {
+        Balance balance = balanceRepository.findByProfileId(transaction.getProfileId()).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Balance with profile id = %d not found", transaction.getProfileId())));
         BigDecimal amount = transaction.getAmount();
-        switch (transaction.getType()) {
-            case EXPENSE:
-                if (!deleteTransaction) {
-                    amount = amount.multiply(BigDecimal.valueOf(-1));
-                }
-                break;
-            case INCOME:
-                if (deleteTransaction) {
-                    amount = amount.multiply(BigDecimal.valueOf(-1));
-                }
-                break;
+        if (transaction.getType().equals(TypeOfTransaction.EXPENSE)) {
+            amount = amount.multiply(BigDecimal.valueOf(-1));
         }
         BigDecimal balanceAmount = balance.getAmount();
         balance.setAmount(balanceAmount.add(amount));
         balanceRepository.save(balance);
     }
 
+    public void changeBalanceDelTrans(TransactionDto transaction) {
+        Balance balance = balanceRepository.findByProfileId(transaction.getProfileId()).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Balance with profile id = %d not found", transaction.getProfileId())));
+        BigDecimal amount = transaction.getAmount();
+        if (transaction.getType().equals(TypeOfTransaction.INCOME)) {
+            amount = amount.multiply(BigDecimal.valueOf(-1));
+        }
+        BigDecimal balanceAmount = balance.getAmount();
+        balance.setAmount(balanceAmount.add(amount));
+        balanceRepository.save(balance);
+    }
 
 }
