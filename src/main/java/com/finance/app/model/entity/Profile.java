@@ -36,7 +36,7 @@ public class Profile {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Collection<Transaction> transactions;
 
     @Override

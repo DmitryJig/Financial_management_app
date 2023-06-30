@@ -1,6 +1,7 @@
 package com.finance.app.service;
 
 import com.finance.app.converters.TransactionConverter;
+import com.finance.app.exception.ResourceNotFoundException;
 import com.finance.app.model.dto.TransactionDto;
 import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.TransactionRepository;
@@ -15,11 +16,10 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionConverter transactionConverter;
+    private final BalanceService balanceService;
 
     public TransactionDto save(Transaction transaction) {
-
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.changeBalance(transactionConverter.toDto(transaction));
         return transactionConverter.toDto(transactionRepository.save(transaction));
     }
 
@@ -27,10 +27,14 @@ public class TransactionService {
         return transactionRepository.findAllByProfileId(profileId);
     }
 
+    public TransactionDto getById(Long transactionId) {
+        return transactionConverter.toDto(transactionRepository.findById(transactionId).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Transaction with id = %d not found", transactionId))
+        ));
+    }
+
     public void deleteByIdAndProfileId(Long id, Long profileId) {
-
-        //TODO здесь будет логика калькуляции баланса пользователя через бин balanceService, который нужно реализовать
-
+        balanceService.changeBalanceDelTrans(getById(id));
         transactionRepository.deleteByIdAndProfileId(id, profileId);
     }
 
