@@ -1,6 +1,7 @@
 package com.finance.app.model.dto;
 
 
+import com.finance.app.model.entity.Profile;
 import lombok.Value;
 
 
@@ -8,4 +9,5 @@ import lombok.Value;
 public class CategoryDto {
     Long id;
     String title;
+    Profile profile;
 }
