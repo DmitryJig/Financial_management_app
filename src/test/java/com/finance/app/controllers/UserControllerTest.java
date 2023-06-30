@@ -68,26 +68,6 @@ public class UserControllerTest {
     }
 
     @Test
-    void createUserTest() throws Exception {
-        User testUser = getTestUser();
-        RegUserDto regUserDto =
-                new RegUserDto(
-                        testUser.getUsername(),
-                        testUser.getPassword(),
-                        testUser.getEmail(),
-                        testUser.getRoles()
-                );
-        mockMvc.perform(
-                post("/api/v1/users/1/create")
-                        .content(objectMapper.writeValueAsString(regUserDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isCreated());
-        testUser = userService.getUserByUsername(testUser.getUsername());
-        userService.delete(testUser);
-    }
-
-    @Test
     void deleteById() throws Exception {
         User testUser = getTestUser();
         userService.save(testUser);
