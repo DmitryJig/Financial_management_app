@@ -30,7 +30,7 @@ public class TransactionServiceTest {
 
     @Test
     void testSave() {
-        Transaction transaction = getTestTransaction("test",LocalDate.now());
+        Transaction transaction = getTestTransaction("test", LocalDate.now());
         TransactionDto savedTransaction = transactionService.save(transaction);
         assertAll(
                 () -> assertNotNull(savedTransaction.getId()),
@@ -69,14 +69,16 @@ public class TransactionServiceTest {
         saveRangeTransaction();
         List<Transaction> list = transactionService.getTransactionByProfileAndDateRange(2L, LocalDate.of(2023, 1, 1), LocalDate.of(2023, 5, 4));
         List<Transaction> listRepo = transactionRepository.findByProfileIdAndCreatedBetween(2L, LocalDate.of(2023, 1, 1), LocalDate.of(2023, 5, 4));
+        System.out.println(list.size());
         assertAll(
                 () -> assertEquals(list.size(), listRepo.size()),
-                () -> assertEquals(list.get(1).getDescription(), listRepo.get(1).getDescription())
+                () -> assertEquals(list.get(1).getDescription(), listRepo.get(1).getDescription()),
+                () -> assertEquals(list.size(), 5)
         );
     }
 
     private void saveRangeTransaction() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             transactionService.save(getTestTransaction(String.valueOf(i), LocalDate.of(LocalDate.now().getYear(), i + 1, 1)));
         }
     }
