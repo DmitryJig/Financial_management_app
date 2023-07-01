@@ -20,7 +20,7 @@ databaseChangeLog:
       changes:
         - createSequence:
             sequenceName: TRANSACTIONS_SEC
-            startValue: 4
+            startValue: 8
   - changeSet:
       id: sequence_report_sec
       author: i.kalendarev
