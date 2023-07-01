@@ -3,7 +3,9 @@ package com.finance.app.service;
 import com.finance.app.converters.BalanceConverter;
 import com.finance.app.model.dto.BalanceDto;
 import com.finance.app.model.entity.Balance;
+import com.finance.app.model.entity.Profile;
 import com.finance.app.repository.BalanceRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +29,7 @@ class BalanceServiceTest {
 
 
     @Test
-    void testFindByBalanceIdAndProfileId() {
+    public void testFindByBalanceIdAndProfileId() {
         BalanceDto balanceDto = balanceService.findByBalanceIdAndProfileId(1l, 1l);
         assertAll(
                 () -> assertEquals(1L, balanceDto.getId()),
@@ -36,9 +38,20 @@ class BalanceServiceTest {
     }
 
     @Test
-    Balance testCreateNewBalance() {
+    public void testCreateNewBalance() {
+        Balance balance = new Balance();
+        Profile profile = new Profile();
+        balance.setAmount(BigDecimal.valueOf(1000));
+        balanceService.createNewBalance(profile);
+        Assertions.assertNotNull(profile.getId());
+        Assertions.assertEquals(1000, profile.getId());
+
+    }
+
+    @Test
+    private Balance createTestBalance() {
         Balance balance = new Balance();
         balance.setAmount(BigDecimal.valueOf(1000));
-        return balance;
+        return balanceRepository.save(balance);
     }
 }
