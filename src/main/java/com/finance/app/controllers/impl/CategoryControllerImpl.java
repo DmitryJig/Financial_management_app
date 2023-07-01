@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1/categories/{profileId}")
 @RequiredArgsConstructor
 public class CategoryControllerImpl implements CategoryController {
     private final CategoryService categoryService;
@@ -21,8 +21,8 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     @GetMapping
-    public List<CategoryDto> findAll() {
-        return categoryService.getAllCategories()
+    public List<CategoryDto> findAll(@PathVariable Long profileId) {
+        return categoryService.getAllCategories(profileId)
                 .stream()
                 .map(categoryConverter::entityToDTO)
                 .collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     @GetMapping("/{title}")
-    public CategoryDto findByName(@PathVariable String title) {
+    public CategoryDto findByName(@RequestParam String title) {
         Category category = categoryService.getCategoryByTitle(title);
         return categoryConverter.entityToDTO(category);
     }
@@ -56,7 +56,7 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     @DeleteMapping("/{title}")
-    public void deleteCategoryByName(@PathVariable String title) {
+    public void deleteCategoryByName(@RequestParam String title) {
         categoryService.deleteCategoryByTitle(title);
     }
 }

@@ -19,8 +19,8 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryConverter categoryConverter;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<Category> getAllCategories(Long profileId) {
+        return categoryRepository.findAllByProfileId(profileId);
     }
 
     public Category getCategoryById(Long id) {
