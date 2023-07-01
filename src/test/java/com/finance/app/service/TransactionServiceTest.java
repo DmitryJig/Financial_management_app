@@ -36,6 +36,7 @@ public class TransactionServiceTest {
                 () -> assertNotNull(savedTransaction.getId()),
                 () -> assertEquals(transaction.getDescription(), savedTransaction.getDescription())
         );
+        transactionService.deleteByIdAndProfileId(savedTransaction.getId(),savedTransaction.getProfileId());
     }
 
     @Test
@@ -75,11 +76,18 @@ public class TransactionServiceTest {
                 () -> assertEquals(list.get(1).getDescription(), listRepo.get(1).getDescription()),
                 () -> assertEquals(list.size(), 5)
         );
+        deleteRangeTransaction(list);
     }
 
     private void saveRangeTransaction() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             transactionService.save(getTestTransaction(String.valueOf(i), LocalDate.of(LocalDate.now().getYear(), i + 1, 1)));
+        }
+    }
+
+    private void deleteRangeTransaction(List<Transaction> transaction){
+        for (Transaction t:transaction) {
+            transactionService.deleteByIdAndProfileId(t.getId(),t.getProfile().getId());
         }
     }
 

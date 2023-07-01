@@ -71,8 +71,11 @@ public class TransactionControllerTest {
                 ).andExpect(status().isCreated())
                 .andReturn();
         String response = result.getResponse().getContentAsString();
+        Long transactionId = Long.parseLong(read(response, "$.id").toString());
         String description = read(response, "$.description");
         assertEquals(transaction.getDescription(), description);
+
+        transactionService.deleteByIdAndProfileId(transactionId,transaction.getProfileId());
     }
 
     private Transaction getTestTransaction() {
