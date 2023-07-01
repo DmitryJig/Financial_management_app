@@ -11,7 +11,7 @@ insert into profiles(profile_name, user_id) values ('Family', 1), ('Personal',  
 
 insert into balances(amount, profile_id) values (100, 1), (750, 2), (0, 3);
 
-insert into categories(title) values ('питание'), ('спорт'), ('отдых');
+insert into categories(title, profile_id) values ('питание', 1), ('спорт', 1), ('отдых', 1);
 
 insert into transactions(description, amount, type, created, profile_id, category_id) values
 ('Купил продукты на неделю', 100, 'EXPENSE',  now(), 1, 1),
