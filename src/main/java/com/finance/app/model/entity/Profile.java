@@ -36,8 +36,10 @@ public class Profile {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Collection<Transaction> transactions;
+    @OneToMany(mappedBy = "profile")
+    private Collection<Category> categories;
 
     @Override
     public boolean equals(Object o) {
