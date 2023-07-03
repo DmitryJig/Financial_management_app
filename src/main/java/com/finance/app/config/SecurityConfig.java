@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests()
                 .regexMatchers(HttpMethod.POST, "/login", "/create").permitAll()
-                .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*").permitAll()
+                .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*", "/actuator/*.*").permitAll()
                 .regexMatchers("/api/v1/users/*.*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
