@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-                .regexMatchers(HttpMethod.POST, "/login", "/api/v1/users/create").permitAll()
+                .regexMatchers(HttpMethod.POST, "/login", "/create").permitAll()
                 .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*").permitAll()
                 .regexMatchers("/api/v1/users/*.*").hasRole("ADMIN")
                 .anyRequest().authenticated()
