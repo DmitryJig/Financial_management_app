@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users/{id}")
+@RequestMapping
 public class UserControllerImpl implements UserController {
     private final UserService userService;
     private final UserConverter userConverter;
 
     @Override
-    @GetMapping("/all")
+    @GetMapping("/api/v1/users/{id}/all")
     public List<UserDto> findAll() {
         return userService.findAll()
                 .stream()
@@ -30,7 +30,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @GetMapping
+    @GetMapping("/api/v1/users/{id}")
     public UserDto findById(@PathVariable Long id) {
         return userConverter.entityToDto(userService.findById(id));
     }
@@ -43,7 +43,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @DeleteMapping
+    @DeleteMapping("/api/v1/users/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
     }

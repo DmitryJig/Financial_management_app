@@ -38,7 +38,7 @@ public class Profile {
     private User user;
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Collection<Transaction> transactions;
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Collection<Category> categories;
 
     @Override

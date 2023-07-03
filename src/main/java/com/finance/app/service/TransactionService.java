@@ -7,6 +7,7 @@ import com.finance.app.model.entity.Transaction;
 import com.finance.app.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,7 @@ public class TransactionService {
         ));
     }
 
+    @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
         balanceService.changeBalanceDelTrans(getById(id));
         transactionRepository.deleteByIdAndProfileId(id, profileId);
