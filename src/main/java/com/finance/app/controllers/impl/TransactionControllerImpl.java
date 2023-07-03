@@ -5,6 +5,7 @@ import com.finance.app.converters.TransactionConverter;
 import com.finance.app.model.dto.TransactionDto;
 import com.finance.app.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class TransactionControllerImpl implements TransactionController {
 
     @Override
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public TransactionDto addTransaction(@Valid @RequestBody TransactionDto dto) {
         return transactionService.save(transactionConverter.toEntity(dto));
     }
