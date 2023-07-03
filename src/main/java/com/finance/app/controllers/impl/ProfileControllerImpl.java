@@ -34,7 +34,7 @@ public class ProfileControllerImpl implements ProfileController {
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProfileDto createProfile(@Valid @RequestBody ProfileReq req) {
+    public ProfileDto createProfile(@Valid @RequestBody ProfileReq req, @PathVariable(name = "userId", required = false) Long userId) {
         return profileService.save(req);
     }
 
