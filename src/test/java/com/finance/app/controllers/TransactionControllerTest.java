@@ -45,7 +45,7 @@ public class TransactionControllerTest {
                 .stream()
                 .map(transactionConverter::toDto)
                 .collect(Collectors.toList());
-        mockMvc.perform(get("/api/v1/users/1/transactions/1"))
+        mockMvc.perform(get("/api/v1/users/1/profiles/1/transactions"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(list)));
@@ -54,18 +54,18 @@ public class TransactionControllerTest {
     @Test
     public void deleteTransactionByIdTest() throws Exception {
         Transaction testTransaction = getTestTransaction();
-        transactionService.save(testTransaction);
-        Long transactionId = testTransaction.getId();
-        mockMvc.perform(delete("/api/v1/users/1/transactions/2/" + transactionId))
+        Long savedId = transactionService.save(testTransaction).getId();
+         mockMvc.perform(delete("/api/v1/users/1/profiles/1/transactions/" + savedId))
                 .andExpect(status().isOk());
-        assertThrows(ResourceNotFoundException.class, () -> transactionService.getById(transactionId));
+        System.out.println();
+        assertThrows(ResourceNotFoundException.class, () -> transactionService.getById(savedId));
     }
 
     @Test
     public void addTransactionTest() throws Exception {
         TransactionDto transaction = transactionConverter.toDto(getTestTransaction());
         MvcResult result = mockMvc.perform(
-                        post("/api/v1/users/1/transactions/2")
+                        post("/api/v1/users/1/profiles/1/transactions", transaction)
                                 .content(objectMapper.writeValueAsString(transaction))
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isCreated())
@@ -84,7 +84,7 @@ public class TransactionControllerTest {
                 BigDecimal.valueOf(300),
                 TypeOfTransaction.INCOME,
                 LocalDate.now(),
-                2L,
+                1L,
                 1L));
     }
 }

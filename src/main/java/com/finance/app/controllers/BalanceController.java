@@ -17,5 +17,5 @@ public interface BalanceController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BalanceDto.class))}),
             @ApiResponse(responseCode = "400", description = "Balance not found", content = @Content),
             @ApiResponse(responseCode = "403", description = "ProfileId and request doesn't match", content = @Content)})
-    BalanceDto getBalance(Long profileId, Long balanceId);
+    BalanceDto getBalance(Long profileId, Long balanceId, Long userId);
 }
