@@ -3,6 +3,7 @@ package com.finance.app.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,9 +41,10 @@ public class Report {
     @ElementCollection
     @CollectionTable(name = "report_expense_by_category")
     List<ReportEntity> expenseByCategory;
-
+    @DecimalMin(value = "0.01", inclusive = false, message = "Общая сумма расходов должна быть больше нуля")
     @Column(name = "total_expenses")
     BigDecimal totalExpenses;
+    @DecimalMin(value = "0.01", inclusive = false, message = "Общая сумма доходов должна быть больше нуля")
     @Column(name = "total_income")
     BigDecimal totalIncome;
     @Column(name = "balance")
