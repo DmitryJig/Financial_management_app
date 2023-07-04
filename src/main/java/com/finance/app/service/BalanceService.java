@@ -20,7 +20,6 @@ import java.util.List;
 public class BalanceService {
     private final BalanceRepository balanceRepository;
     private final BalanceConverter balanceConverter;
-    private final TransactionService transactionService;
 
     public BalanceDto findById(Long id) {
         return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
@@ -55,5 +54,6 @@ public class BalanceService {
             }
         }
         balance.setAmount(amount);
+        balanceRepository.save(balance);
     }
 }
