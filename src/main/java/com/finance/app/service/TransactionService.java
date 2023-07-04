@@ -21,7 +21,7 @@ public class TransactionService {
 
     public TransactionDto save(Transaction transaction) {
         TransactionDto transactionDto = transactionConverter.toDto(transactionRepository.save(transaction));
-        balanceService.updateBalance(transactionConverter.toDto(transaction));
+        balanceService.updateBalance(getAllByProfileId(transaction.getProfile().getId()));
         return transactionDto;
     }
 
@@ -38,7 +38,7 @@ public class TransactionService {
     @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
         transactionRepository.deleteByIdAndProfileId(id, profileId);
-        balanceService.updateBalance(getById(id));
+        balanceService.updateBalance(getAllByProfileId(profileId));
     }
 
     public List<Transaction> getTransactionByProfileAndDateRange(Long profileId, LocalDate starDate, LocalDate endDate) {

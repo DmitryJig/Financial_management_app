@@ -23,7 +23,7 @@ public class BalanceService {
     private final TransactionService transactionService;
 
     public BalanceDto findById(Long id) {
-        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
+        return balanceConverter.toDto(balanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Balance with id = %d not found", id))));
     }
 
     public BalanceDto findByBalanceIdAndProfileId(Long balanceId, Long profileId) {
@@ -40,10 +40,9 @@ public class BalanceService {
         return balance;
     }
 
-    public void updateBalance(TransactionDto transactionDto) {
-        Balance balance = balanceRepository.findByProfileId(transactionDto.getProfileId()).orElseThrow(
-                () -> new ResourceNotFoundException(String.format("Balance with profile id = %d not found", transactionDto.getProfileId())));
-        List<Transaction> transactionList = transactionService.getAllByProfileId(transactionDto.getProfileId());
+    public void updateBalance(List<Transaction> transactionList) {
+        Balance balance = balanceRepository.findByProfileId(transactionList.get(0).getProfile().getId()).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Balance with profile id = %d not found", transactionList.get(0).getProfile().getId())));
         BigDecimal amount = BigDecimal.valueOf(0);
         for (Transaction t : transactionList) {
             switch (t.getType()) {
