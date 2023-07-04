@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users/{userId}/transactions/{profileId}")
+@RequestMapping("/api/v1/users/{userId}/profiles/{profileId}/transactions")
 @Tag(name = "Transaction Controller", description = "Transaction API")
 public interface TransactionController {
     @Operation(summary = "Get all transactions by profile ID", security = @SecurityRequirement(name = "JWT"))
@@ -22,20 +22,20 @@ public interface TransactionController {
             @ApiResponse(responseCode = "200", description = "List of transactions",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TransactionDto.class))})
     })
-    List<TransactionDto> getAllTransaction(Long profileId);
+    List<TransactionDto> getAllTransaction(Long profileId, Long userId);
 
     @Operation(summary = "Delete transaction by ID and profile ID", security = @SecurityRequirement(name = "JWT"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Transaction deleted"),
             @ApiResponse(responseCode = "404", description = "Transaction not found", content = @Content)
     })
-    void deleteTransactionById(Long profileId, Long transactionId);
+    void deleteTransactionById(Long userId, Long profileId, Long transactionId);
 
     @Operation(summary = "Add a new transaction", security = @SecurityRequirement(name = "JWT"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Added transaction",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TransactionDto.class))})
     })
-    TransactionDto addTransaction(TransactionDto dto);
+    TransactionDto addTransaction(TransactionDto dto, Long userId, Long profileId);
 
 }

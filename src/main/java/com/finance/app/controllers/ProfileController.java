@@ -33,7 +33,7 @@ public interface ProfileController {
             @ApiResponse(responseCode = "201", description = "Create profile",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProfileDto.class))}),
             @ApiResponse(responseCode = "403", description = "UserId and request doesn't match", content = @Content)})
-    ProfileDto createProfile(ProfileReq req);
+    ProfileDto createProfile(ProfileReq req, Long userId);
 
     @Operation(summary = "Delete user profile", security = @SecurityRequirement(name = "JWT"))
     @ApiResponses(value = {

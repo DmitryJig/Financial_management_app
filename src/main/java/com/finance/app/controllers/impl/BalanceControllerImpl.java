@@ -14,7 +14,7 @@ public class BalanceControllerImpl implements BalanceController {
 
     @Override
     @GetMapping("/{balanceId}")
-    public BalanceDto getBalance(@PathVariable Long profileId, @PathVariable Long balanceId) {
+    public BalanceDto getBalance(@PathVariable Long profileId, @PathVariable Long balanceId, @PathVariable(name = "userId", required = false) Long userId) {
         return balanceService.findByBalanceIdAndProfileId(balanceId, profileId);
     }
 }

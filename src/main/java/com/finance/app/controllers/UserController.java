@@ -23,7 +23,7 @@ public interface UserController {
             @ApiResponse(responseCode = "200", description = "List of users",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))})
     })
-    List<UserDto> findAll();
+    List<UserDto> findAll(Long id);
 
     @Operation(summary = "Get user by ID", security = @SecurityRequirement(name = "JWT"))
     @ApiResponses(value = {

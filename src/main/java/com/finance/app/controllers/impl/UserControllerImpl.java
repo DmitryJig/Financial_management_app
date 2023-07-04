@@ -22,7 +22,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/api/v1/users/{id}/all")
-    public List<UserDto> findAll() {
+    public List<UserDto> findAll(@PathVariable(name = "id", required = false) Long id) {
         return userService.findAll()
                 .stream()
                 .map(userConverter::entityToDto)
