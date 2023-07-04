@@ -20,8 +20,9 @@ public class TransactionService {
     private final BalanceService balanceService;
 
     public TransactionDto save(Transaction transaction) {
-        balanceService.changeBalance(transactionConverter.toDto(transaction));
-        return transactionConverter.toDto(transactionRepository.save(transaction));
+        TransactionDto transactionDto = transactionConverter.toDto(transactionRepository.save(transaction));
+        balanceService.updateBalance(getAllByProfileId(transaction.getProfile().getId()));
+        return transactionDto;
     }
 
     public List<Transaction> getAllByProfileId(Long profileId) {
@@ -36,8 +37,8 @@ public class TransactionService {
 
     @Transactional
     public void deleteByIdAndProfileId(Long id, Long profileId) {
-        balanceService.changeBalanceDelTrans(getById(id));
         transactionRepository.deleteByIdAndProfileId(id, profileId);
+        balanceService.updateBalance(getAllByProfileId(profileId));
     }
 
     public List<Transaction> getTransactionByProfileAndDateRange(Long profileId, LocalDate starDate, LocalDate endDate) {
