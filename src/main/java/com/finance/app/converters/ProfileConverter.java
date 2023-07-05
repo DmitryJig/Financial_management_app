@@ -17,7 +17,7 @@ public class ProfileConverter {
         var profile = new Profile();
         profile.setId(dto.getId());
         profile.setProfileName(dto.getProfileName());
-        profile.setUser(userService.findById(dto.getId()));
+        profile.setUser(userService.findById(dto.getUserId()));
         return profile;
     }
 
