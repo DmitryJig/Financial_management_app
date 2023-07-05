@@ -68,8 +68,14 @@
 
 ## Скриншоты:
 
+Страница регистрации пользователя:
+
 ![Скриншот1](https://github.com/DmitryJig/Financial_management_app/blob/master/164017.jpg)
 
+Страница управления профилями:
+
 ![Скриншот2](https://github.com/DmitryJig/Financial_management_app/blob/master/264056.jpg)
+
+Страница управления транзакциями:
 
 ![Скриншот3](https://github.com/DmitryJig/Financial_management_app/blob/master/363747.jpg)
