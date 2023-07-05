@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface CategoryController {
             @ApiResponse(responseCode = "200", description = "List of categories",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CategoryDto.class))})
     })
-    List<CategoryDto> findAll();
+    List<CategoryDto> findAll(Long profileId);
 
     @Operation(summary = "Get category by ID", security = @SecurityRequirement(name = "JWT"))
     @ApiResponses(value = {

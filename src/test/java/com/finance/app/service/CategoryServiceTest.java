@@ -34,7 +34,7 @@ public class CategoryServiceTest {
     @Test
     public void testGetAllCategories() {
         createTestCategory();
-        List<Category> result = categoryService.getAllCategories();
+        List<Category> result = categoryService.getAllCategories(1L);
         Assertions.assertEquals(4, result.size());
         Assertions.assertEquals("Category Test", result.get(3).getTitle());
         categoryService.deleteCategoryByTitle("Category Test");
