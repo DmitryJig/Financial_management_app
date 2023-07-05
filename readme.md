@@ -25,20 +25,29 @@
 **Запуск:**
 - **Запустить докер**.
 - Выполнить на нём, чтобы создать БД в докер контейнере, в комендной строке (в случае линукс и докер в руте надо перед командами писать sudo):
+```sh
   docker run --name postgres_finance -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=finance_db -p 5433:5432 -d postgres:latest
+```
 - посмотреть создался ли контейнер с именем postgres_finance можно командой (вывод существующих контейнеров)
+```sh
   docker ps -a
+```
 - Для проверки создалась ли база данных смотрим в постгрес из терминала
+```sh
   docker exec -it postgres_finance psql -U postgres
+```
 - Подключение к БД
+```sh
   \c finance_db
+```
   Для выхода используем
+```sh
   exit
-
+```
 - **(Для повторного запуска БД используем)**
-
+```sh
   docker start postgres_finance
-
+```
 - **Скачать файлы программы с ГитХаб:**
 
   **[Страница проекта на ГитХаб](https://github.com/DmitryJig/Financial_management_app)**
