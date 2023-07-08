@@ -19,8 +19,8 @@ spring:
     password: postgres
     driverClassName: org.postgresql.Driver
 
-  profiles:
-    active: prod
+#  profiles:
+#    active: prod
 
   liquibase:
     enabled: true

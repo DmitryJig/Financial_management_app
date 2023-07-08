@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
-                .cors().and()
+                .cors().disable()
                 .authorizeHttpRequests()
                 .regexMatchers(HttpMethod.POST, "/login", "/create").permitAll()
                 .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*", "/actuator/*.*").permitAll()
