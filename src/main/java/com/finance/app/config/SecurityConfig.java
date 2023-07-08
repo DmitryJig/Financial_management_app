@@ -21,11 +21,13 @@ public class SecurityConfig {
     private final AuthenticationFilter authenticationFilter;
     private final AuthEntryPoint exceptionHandler;
 
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
-                .cors().disable()
+                .cors().and()
                 .authorizeHttpRequests()
                 .regexMatchers(HttpMethod.POST, "/login", "/create").permitAll()
                 .regexMatchers("/api/v1", "/index.html", "/swagger-ui.html", "/swagger-ui/*.*", "/v3/api-docs/*.*", "/actuator/*.*").permitAll()
